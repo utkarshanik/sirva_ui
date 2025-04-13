@@ -17,7 +17,7 @@
   <kendo-tabstrip-tab title="CALENDER">
     <ng-template kendoTabContent>
       <div class="activities-tab">
-        <img src="assets/calendar-logo.png" alt="Calendar Logo" class="calendar-logo" />
+        <!-- <img src="assets/calendar-logo.png" alt="Calendar Logo" class="calendar-logo" /> -->
         <kendo-calendar></kendo-calendar>
       </div>
     </ng-template>
@@ -27,14 +27,14 @@
     <ng-template kendoTabContent>
       <p>Tab 3 Content</p>
     </ng-template>
-    
   </kendo-tabstrip-tab>
-  <!-- <ng-template kendoTabContent> -->
-    <!-- <p>Tab 5 Content</p> -->
-  <!-- </ng-template> -->
+ 
   <kendo-tabstrip-tab title="LEAD MANAGEMENT" [selected]="true">
-    
+    <ng-template kendoTabContent>
+      <app-home></app-home>
+    </ng-template>
   </kendo-tabstrip-tab>
+
   <kendo-tabstrip-tab title="ACTIVITIES">
     <ng-template kendoTabContent>
   

@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<!-- <app-navbar></app-navbar> -->
 
 <div class="p-2 m-2 rounded-3" style="border:  solid green;">
 
@@ -71,7 +71,7 @@
 
             <button kendoButton  (click)="onButtonClick()" title="Browse" class="greenbt rounded-5 w-75 h-75  mx-2">Non-Intl.</button>
             
-            <button kendoButton (click)="onButtonClick()" title="Browse" class="greenbt rounded-5 w-75 h-75 ">Intl.</button>  
+            <button kendoButton (click)="onButtonClick()" title="Browse" class="greenbt rounded-5 w-75 h-75 mx-2">Intl.</button>  
           </div>
 
           <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Clear Filters</button>
@@ -97,11 +97,74 @@
       
         <kendo-grid-column field="full_name" title="Actions" [width]="220">
           <ng-template kendoGridCellTemplate let-dataItem>
+
+          
+              <kendo-dropdowntree
+                kendoDropDownTreeExpandable
+                [kendoDropDownTreeHierarchyBinding]="areaData"
+                textField="text"
+                valueField="id"
+                childrenField="areas"
+                placeholder="Actions"
+                >
+       
+              </kendo-dropdowntree>
+          
             <!-- <div
               class="customer-photo"
               [ngStyle]="{ 'background-image': photoURL(dataItem) }"
             ></div> -->
-            <div class="customer-name">{{ dataItem.full_name }}</div>
+            <!-- <div class="customer-name">{{ dataItem.full_name }}</div> -->
+            <!-- dropDownTREE -->
+
+            <!-- <div class="food-demo card-container">
+              <div class="k-card custom-card">
+                <div class="card-row">
+                  <div class="card-column">
+                    <h4 class="k-h4">Time to order food</h4>
+                    <div class="component-container"> -->
+                      <!-- <label for="">
+                        Find restaurants in your area
+                        <kendo-dropdowntree
+                          kendoDropDownTreeExpandable
+                          [kendoDropDownTreeHierarchyBinding]="areaData"
+                          textField="text"
+                          valueField="id"
+                          childrenField="areas"
+                        >
+                        </kendo-dropdowntree>
+                      </label> -->
+
+                    <!-- </div> -->
+                    <!-- <div class="skeleton-container top">
+                      <div class="k-skeleton skeleton-box-small"></div>
+                      <div class="k-skeleton skeleton-box-large"></div>
+                    </div>
+                    <div class="skeleton-container bottom">
+                      <div class="k-skeleton skeleton-box-medium"></div>
+                      <div class="k-skeleton skeleton-box-medium"></div>
+                    </div> -->
+                  <!-- </div> -->
+                  <!-- <div class="card-column image-container">
+                    <div class="k-skeleton skeleton-image">
+                    </div>
+                  </div> -->
+                <!-- </div> -->
+                <!-- <div class="card-row">
+                  <div class="k-skeleton skeleton-box-half"></div>
+                </div> -->
+              <!-- </div>/ -->
+            <!-- </div> -->
+
+
+
+
+
+
+
+
+
+
           </ng-template>
         </kendo-grid-column>
 

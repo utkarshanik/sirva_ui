@@ -49,3 +49,13 @@
 .text-bold {
   font-weight: 600;
 }
+
+.k-grid .k-grid-header .k-table-th  {
+background-color: #002266 !important;
+}
+
+.k-picker-solid
+{
+  background-color: #88bb44;
+  color: #fff;
+}

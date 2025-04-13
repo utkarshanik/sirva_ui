@@ -8,21 +8,22 @@ import { process } from '@progress/kendo-data-query';
 import { employees } from '../employees';
 import { filePdfIcon, fileExcelIcon, SVGIcon } from '@progress/kendo-svg-icons';
 import { images } from '../images';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { KENDO_BUTTONS, KENDO_DROPDOWNBUTTON } from '@progress/kendo-angular-buttons';
-import { KENDO_DROPDOWNLIST } from '@progress/kendo-angular-dropdowns';
+import { KENDO_DROPDOWNLIST, KENDO_DROPDOWNTREE } from '@progress/kendo-angular-dropdowns';
 import { menuIcon } from '@progress/kendo-svg-icons'
 import { IconsModule } from '@progress/kendo-angular-icons';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   imports: [KENDO_GRID,  CommonModule,
     KENDO_CHARTS,
     KENDO_INPUTS,
     KENDO_GRID_PDF_EXPORT,
-    KENDO_GRID_EXCEL_EXPORT,NavbarComponent,KENDO_CHECKBOX,KENDO_BUTTONS,KENDO_DROPDOWNLIST,IconsModule],
+    KENDO_GRID_EXCEL_EXPORT,KENDO_CHECKBOX,KENDO_BUTTONS,KENDO_DROPDOWNLIST,IconsModule,KENDO_DROPDOWNTREE],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
+
 })
 export class HomeComponent implements OnInit {
   @ViewChild(DataBindingDirective) dataBinding!: DataBindingDirective;
@@ -105,4 +106,158 @@ export class HomeComponent implements OnInit {
   // {
   //   alert("export to excel")
   // }
+
+  // dropDowntree
+  public areaData: AreaData[] = [
+    {
+      text: "America",
+      id: 1,
+      areas: [
+        { text: "Chicago", id: 4 },
+        { text: "Los Angeles", id: 3 },
+        { text: "New York", id: 2 },
+        { text: "San Francisco", id: 5 },
+      ],
+    },
+    {
+      text: "Europe",
+      id: 6,
+      areas: [
+        { text: "Amsterdam", id: 7 },
+        { text: "Barcelona", id: 10 },
+        { text: "London", id: 8 },
+        { text: "Paris", id: 9 },
+      ],
+    },
+    {
+      text: "Europe",
+      id: 6,
+      areas: [
+        { text: "Amsterdam", id: 7 },
+        { text: "Barcelona", id: 10 },
+        { text: "London", id: 8 },
+        { text: "Paris", id: 9 },
+      ],
+    },
+    {
+      text: "Europe",
+      id: 6,
+      areas: [
+        { text: "Amsterdam", id: 7 },
+        { text: "Barcelona", id: 10 },
+        { text: "London", id: 8 },
+        { text: "Paris", id: 9 },
+      ],
+    },
+    {
+      text: "Europe",
+      id: 6,
+      areas: [
+        { text: "Amsterdam", id: 7 },
+        { text: "Barcelona", id: 10 },
+        { text: "London", id: 8 },
+        { text: "Paris", id: 9 },
+      ],
+    },
+    {
+      text: "Europe",
+      id: 6,
+      areas: [
+        { text: "Amsterdam", id: 7 },
+        { text: "Barcelona", id: 10 },
+        { text: "London", id: 8 },
+        { text: "Paris", id: 9 },
+      ],
+    },
+    {
+      text: "Europe",
+      id: 6,
+      areas: [
+        { text: "Amsterdam", id: 7 },
+        { text: "Barcelona", id: 10 },
+        { text: "London", id: 8 },
+        { text: "Paris", id: 9 },
+      ],
+    },
+    {
+      text: "Europe",
+      id: 6,
+      areas: [
+        { text: "Amsterdam", id: 7 },
+        { text: "Barcelona", id: 10 },
+        { text: "London", id: 8 },
+        { text: "Paris", id: 9 },
+      ],
+    },
+    {
+      text: "Europe",
+      id: 6,
+      areas: [
+        { text: "Amsterdam", id: 7 },
+        { text: "Barcelona", id: 10 },
+        { text: "London", id: 8 },
+        { text: "Paris", id: 9 },
+      ],
+    },
+    {
+      text: "Europe",
+      id: 6,
+      areas: [
+        { text: "Amsterdam", id: 7 },
+        { text: "Barcelona", id: 10 },
+        { text: "London", id: 8 },
+        { text: "Paris", id: 9 },
+      ],
+    },
+    {
+      text: "Europe",
+      id: 6,
+      areas: [
+        { text: "Amsterdam", id: 7 },
+        { text: "Barcelona", id: 10 },
+        { text: "London", id: 8 },
+        { text: "Paris", id: 9 },
+      ],
+    },
+    {
+      text: "Europe",
+      id: 6,
+      areas: [
+        { text: "Amsterdam", id: 7 },
+        { text: "Barcelona", id: 10 },
+        { text: "London", id: 8 },
+        { text: "Paris", id: 9 },
+      ],
+    },
+    {
+      text: "Europe",
+      id: 6,
+      areas: [
+        { text: "Amsterdam", id: 7 },
+        { text: "Barcelona", id: 10 },
+        { text: "London", id: 8 },
+        { text: "Paris", id: 9 },
+      ],
+    },
+    {
+      text: "Europe",
+      id: 6,
+      areas: [
+        { text: "Amsterdam", id: 7 },
+        { text: "Barcelona", id: 10 },
+        { text: "London", id: 8 },
+        { text: "Paris", id: 9 },
+      ],
+    },
+  ];
 }
+type AreaData = {
+  text: string;
+  id: number;
+  areas: Area[];
+};
+
+type Area = {
+  text: string;
+  id: number;
+};

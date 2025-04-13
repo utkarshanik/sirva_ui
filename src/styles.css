@@ -9,3 +9,14 @@
   color: white !important;
   border: none !important;
 }
+
+/* Updated the header cell and 3-dot icon colors for better visibility */
+.k-grid .k-grid-header .k-table-th {
+  background-color: #004080 !important; /* Changed to a lighter shade for better visibility */
+  color: #ffffff; /* Added white text color for contrast */
+}
+
+/* Change the color of the 3-dot icon in the header to white */
+.k-grid .k-grid-header .k-table-th .k-grid-column-menu {
+  color: #ffffff !important; /* Set the 3-dot icon color to white */
+}
