@@ -1,3 +1,27 @@
+.lead
+{
+  font-size: 0.7em;
+  font-weight: 400;
+  /* color: #333; */
+  /* margin-bottom: 20px; */
+}
+
+.manage
+{
+  color: green;
+}
+
+.greenbt
+{
+  background-color: green;
+  color: #fff;
+}
+
+.bluebt
+{
+  background-color: #007bff;
+  color: #fff;
+}   
 .customer-photo {
   display: inline-block;
   width: 32px;
