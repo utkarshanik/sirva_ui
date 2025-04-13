@@ -8,20 +8,20 @@
 
 .manage
 {
-  color: green;
+  color: #88bb44;
 }
 
 .greenbt
 {
-  background-color: green;
+  background-color: #88bb44;
   color: #fff;
 }
 
 .bluebt
 {
-  background-color: #007bff;
+  background-color: #002266;
   color: #fff;
-}   
+}    
 .customer-photo {
   display: inline-block;
   width: 32px;

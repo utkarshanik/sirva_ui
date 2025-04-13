@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="p-2">
+<div class="p-2 m-2 rounded-3" style="border:  solid green;">
 
 <div class="d-flex justify-content-arround align-items-center mb-3">
   <div class="col-6">
@@ -41,40 +41,49 @@
 
       <ng-template kendoGridToolbarTemplate>
 
-        <div class="col-4 d-flex">
+        <div class="col-12 d-flex justify-content-between align-items-center">
 
-          <kendo-dropdownlist [data]="listItems" value="All Leads">
-          </kendo-dropdownlist> 
-          
-          <kendo-dropdownlist [data]="listItems" value="Select Saved Preference">
-          </kendo-dropdownlist> 
+        <div class="col-4 d-flex justify-content-space-between align-items-center">
+
+          <div>
+
+            
+            <kendo-dropdownlist [data]="listItems" value="All Leads">
+            </kendo-dropdownlist> 
+          </div>
+            <div class="mx-2">
+
+              <kendo-dropdownlist [data]="listItems" value="Select Saved Preference">
+              </kendo-dropdownlist> 
+            </div>
           
           <kendo-textbox #searchBox [style.width.px]="165" placeholder="Type Search Keyword" (valueChange)="onFilter($event)"></kendo-textbox>
           <kendo-grid-spacer></kendo-grid-spacer>
-          <div class="greenbt p-2 rounded-3" (click)="onFilter(searchBox.value)">
+          <div class="greenbt p-2 rounded-3 mx-2" (click)="onFilter(searchBox.value)">
             <img src="assets/icons8-search-25.png" alt="Search Icon">
           </div>
 
         </div>
 
-        <div class="col-7 d-flex justify-content-end">
+        <div class="col-7 d-flex justify-content-end justify-content-space-evenly g-2">
 
           <div class="  rounded-5 p-1 px-2 d-flex align-items-center justify-content-between w-25  bluebt">
 
-            <button kendoButton  (click)="onButtonClick()" title="Browse" class="greenbt rounded-5 w-75 h-75  ms-auto">Non-Intl.</button>
+            <button kendoButton  (click)="onButtonClick()" title="Browse" class="greenbt rounded-5 w-75 h-75  mx-2">Non-Intl.</button>
             
-            <button kendoButton (click)="onButtonClick()" title="Browse" class="greenbt rounded-5 w-75 h-75 me-auto">Intl</button>  
+            <button kendoButton (click)="onButtonClick()" title="Browse" class="greenbt rounded-5 w-75 h-75 ">Intl.</button>  
           </div>
 
-          <button kendoButton (click)="onButtonClick()" title="Browse" class="greenbt">Clear Filters</button>
-          <button kendoButton (click)="onButtonClick()" title="Browse" class="greenbt"> Bulk Edit</button>
-          <button kendoButton (click)="onButtonClick()" title="Browse" class="greenbt">Save Preference</button>
-          <button kendoButton fillMode="flat">
+          <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Clear Filters</button>
+          <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2"> Bulk Edit</button>
+          <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Save Preference</button>
+          <button  kendoButton fillMode="flat">
             <kendo-svgicon [icon]="menuIcon"></kendo-svgicon>
           </button>
           
-        </div>
 
+        </div>
+        </div>
       </ng-template>
       
       <kendo-grid-checkbox-column
@@ -85,50 +94,59 @@
         [columnMenu]="false"
         [showSelectAll]="true"
       ></kendo-grid-checkbox-column>
-      <kendo-grid-column-group title="Employee" [columnMenu]="false">
-        <kendo-grid-column field="full_name" title="Contact Name" [width]="220">
+      
+        <kendo-grid-column field="full_name" title="Actions" [width]="220">
           <ng-template kendoGridCellTemplate let-dataItem>
-            <div
+            <!-- <div
               class="customer-photo"
               [ngStyle]="{ 'background-image': photoURL(dataItem) }"
-            ></div>
+            ></div> -->
             <div class="customer-name">{{ dataItem.full_name }}</div>
           </ng-template>
         </kendo-grid-column>
-        <kendo-grid-column field="job_title" title="Job Title" [width]="220">
+
+        <kendo-grid-column field="job_title" title="Record Id" [width]="220">
         </kendo-grid-column>
+
         <kendo-grid-column
           field="country"
-          title="Country"
-          [width]="100"
+          title="Last Name"
+          [width]="200"
           [class]="{ 'text-center': true }"
           [resizable]="false"
         >
           <ng-template kendoGridCellTemplate let-dataItem>
-            <img class="flag" [src]="flagURL(dataItem)" [width]="30" />
+            <P>nIKAM SDE</P>
           </ng-template>
         </kendo-grid-column>
+
         <kendo-grid-column
           field="is_online"
-          title="Status"
-          [width]="100"
+          title="First Name"
+          [width]="200"
           [class]="{ 'text-center': true }"
           [resizable]="false"
           filter="boolean"
         >
           <ng-template kendoGridCellTemplate let-dataItem>
-            @if (dataItem.is_online === true) {
+            <!-- @if (dataItem.is_online === true) {
             <span class="badge badge-success">Online</span>
             } @if (dataItem.is_online === false) {
             <span class="badge badge-danger">Offline</span>
-            }
+            } -->
+
+            <P>DSDSDSD</P>
           </ng-template>
         </kendo-grid-column>
-      </kendo-grid-column-group>
-      <kendo-grid-column-group title="Performance" [columnMenu]="false">
+
+        <kendo-grid-column field="address" title="Primary Email Address" [width]="200">
+        </kendo-grid-column>
+        <kendo-grid-column field="phone" title="Primary Phone Number" [width]="200">
+        </kendo-grid-column>
+<!--         
         <kendo-grid-column
           field="rating"
-          title="Rating"
+          title="Primary Email Address"
           [width]="200"
           [resizable]="false"
           filter="numeric"
@@ -141,13 +159,13 @@
             ></kendo-rating>
           </ng-template>
         </kendo-grid-column>
+
         <kendo-grid-column
           field="target"
-          title="Engagement"
+          title="Primary Phone Number"
           [width]="230"
           [resizable]="false"
-          filter="numeric"
-        >
+          filter="numeric">
           <ng-template kendoGridCellTemplate let-dataItem>
             <kendo-sparkline
               type="bar"
@@ -165,26 +183,25 @@
               </kendo-chart-value-axis>
             </kendo-sparkline>
           </ng-template>
-        </kendo-grid-column>
+        </kendo-grid-column> -->
+
         <kendo-grid-column
           field="budget"
-          title="Budget"
+          title="LMP Lead Id"
           [width]="100"
-          filter="numeric"
-        >
+          filter="numeric">
           <ng-template kendoGridCellTemplate let-dataItem>
             <span [ngClass]="{ 'red text-bold': dataItem.budget < 0 }">{{
               dataItem.budget | currency
             }}</span>
           </ng-template>
         </kendo-grid-column>
-      </kendo-grid-column-group>
-      <kendo-grid-column-group title="Contacts" [columnMenu]="false">
-        <kendo-grid-column field="phone" title="Phone" [width]="130">
+
+        <kendo-grid-column field="phone" title="Appoitment Type" [width]="130">
         </kendo-grid-column>
-        <kendo-grid-column field="address" title="Address" [width]="200">
+        <kendo-grid-column field="address" title="Booking Agency" [width]="200">
         </kendo-grid-column>
-      </kendo-grid-column-group>
+
 
       <kendo-grid-pdf
         fileName="Employees.pdf"
