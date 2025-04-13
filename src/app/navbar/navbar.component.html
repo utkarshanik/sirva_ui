@@ -1,8 +1,13 @@
 <div class="navbar p-2">
 
   <kendo-tabstrip class="my-tabstrip">
-    
-    <kendo-tabstrip-tab title="DASHBOARD">
+
+  <kendo-tabstrip-tab>
+    <ng-template kendoTabTitle>
+      <img src="assets/icons8-management-ios-17-outlined-32.png" alt="Dashboard Logo" class="dashboard-logo" />
+      DASHBOARD
+    </ng-template>
+
     <ng-template kendoTabContent>
       <p class="tab-content">Tab 1 Content</p>
     </ng-template>
@@ -25,11 +30,15 @@
   </kendo-tabstrip-tab>
   <kendo-tabstrip-tab title="EZ-QUOTE">
     <ng-template kendoTabContent>
-      <p>Tab 3 Content</p>
+      <p>Tab 4 Content</p>
     </ng-template>
   </kendo-tabstrip-tab>
  
-  <kendo-tabstrip-tab title="LEAD MANAGEMENT" [selected]="true">
+  <kendo-tabstrip-tab  [selected]="true">
+    <ng-template kendoTabTitle>
+      <img src="assets/team (2).png" alt="Lead Logo" class="lead-logo" />
+      LEAD MANAGEMENT
+    </ng-template>
     <ng-template kendoTabContent>
       <app-home></app-home>
     </ng-template>
@@ -42,13 +51,13 @@
   </kendo-tabstrip-tab>
   <kendo-tabstrip-tab title="WORKFLOWS">
     <ng-template kendoTabContent>
-      <p>Tab 3 Content</p>
+      <p>Tab 6 Content</p>
     </ng-template>
     
   </kendo-tabstrip-tab>
   <kendo-tabstrip-tab title="CHATS">
     <ng-template kendoTabContent>
-      <p>Tab 3 Content</p>
+      <p>Tab 7 Content</p>
     </ng-template>
     
   </kendo-tabstrip-tab>

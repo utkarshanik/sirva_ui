@@ -95,7 +95,7 @@
         [showSelectAll]="true"
       ></kendo-grid-checkbox-column>
       
-        <kendo-grid-column field="full_name" title="Actions" [width]="220">
+        <kendo-grid-column field="full_name" title="Actions" [width]="150">
           <ng-template kendoGridCellTemplate let-dataItem>
 
           
@@ -168,13 +168,13 @@
           </ng-template>
         </kendo-grid-column>
 
-        <kendo-grid-column field="job_title" title="Record Id" [width]="220">
+        <kendo-grid-column field="job_title" title="Record Id" [width]="150">
         </kendo-grid-column>
 
         <kendo-grid-column
           field="country"
           title="Last Name"
-          [width]="200"
+          [width]="150"
           [class]="{ 'text-center': true }"
           [resizable]="false"
         >
@@ -186,7 +186,7 @@
         <kendo-grid-column
           field="is_online"
           title="First Name"
-          [width]="200"
+          [width]="150"
           [class]="{ 'text-center': true }"
           [resizable]="false"
           filter="boolean"
@@ -202,9 +202,9 @@
           </ng-template>
         </kendo-grid-column>
 
-        <kendo-grid-column field="address" title="Primary Email Address" [width]="200">
+        <kendo-grid-column field="address" title="Primary Email Address" [width]="190">
         </kendo-grid-column>
-        <kendo-grid-column field="phone" title="Primary Phone Number" [width]="200">
+        <kendo-grid-column field="phone" title="Primary Phone Type" [width]="190">
         </kendo-grid-column>
 <!--         
         <kendo-grid-column
@@ -251,7 +251,7 @@
         <kendo-grid-column
           field="budget"
           title="LMP Lead Id"
-          [width]="100"
+          [width]="130"
           filter="numeric">
           <ng-template kendoGridCellTemplate let-dataItem>
             <span [ngClass]="{ 'red text-bold': dataItem.budget < 0 }">{{
@@ -260,9 +260,9 @@
           </ng-template>
         </kendo-grid-column>
 
-        <kendo-grid-column field="phone" title="Appoitment Type" [width]="130">
+        <kendo-grid-column field="phone" title="Appoitment Type" [width]="150">
         </kendo-grid-column>
-        <kendo-grid-column field="address" title="Booking Agency" [width]="200">
+        <kendo-grid-column field="address" title="Booking Agency" [width]="150">
         </kendo-grid-column>
 
 
