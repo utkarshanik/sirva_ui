@@ -10,7 +10,7 @@ export class EmployeeComponent {
     employees = [
     {
       id: "848e6002-8a92-447d-951b-1ffd5e695578",
-      full_name: "Sig Jeannel",
+      full_name: "Sig Jeannell",
       job_title: "Human Resources Assistant III",
       country: "US",
       is_online: true,
