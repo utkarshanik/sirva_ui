@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { KENDO_GRID, DataBindingDirective } from '@progress/kendo-angular-grid';
+import { KENDO_GRID, DataBindingDirective, GridComponent } from '@progress/kendo-angular-grid';
 import { KENDO_CHARTS } from '@progress/kendo-angular-charts';
 import { KENDO_CHECKBOX, KENDO_INPUTS } from '@progress/kendo-angular-inputs';
 import { KENDO_GRID_PDF_EXPORT, KENDO_GRID_EXCEL_EXPORT } from '@progress/kendo-angular-grid';
@@ -16,17 +16,33 @@ import { IconsModule } from '@progress/kendo-angular-icons';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [KENDO_GRID,  CommonModule,
+  imports: [KENDO_GRID,CommonModule,
     KENDO_CHARTS,
     KENDO_INPUTS,
     KENDO_GRID_PDF_EXPORT,
     KENDO_GRID_EXCEL_EXPORT,KENDO_CHECKBOX,KENDO_BUTTONS,KENDO_DROPDOWNLIST,IconsModule,KENDO_DROPDOWNTREE],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
-
 })
+
 export class HomeComponent implements OnInit {
+  // DropDowns ===========>
+  public listItems: Array<string> = [
+    "lead 1",
+    "lead 2",
+    "lead 3"
+];
+  public listItems2: Array<string> = [
+    "Pref 1",
+    "Pref 2",
+    "Pref 3"
+];
+
   @ViewChild(DataBindingDirective) dataBinding!: DataBindingDirective;
+  @ViewChild('myGrid') grid!: GridComponent;
+
+  
+ 
   public gridData: unknown[] = employees;
   public gridView: unknown[] = [];
   public menuIcon = menuIcon;
@@ -38,16 +54,9 @@ export class HomeComponent implements OnInit {
     this.gridView = this.gridData;
   }
 
-  // DropDowns
-  public listItems: Array<string> = [
-    "Item 1",
-    "Item 2",
-    "Item 3"
-];
 
   public onFilter(value: string): void {
     const inputValue = value;
-
     this.gridView = process(this.gridData, {
       filter: {
         logic: "or",
@@ -90,6 +99,19 @@ export class HomeComponent implements OnInit {
 
     return image[code];
   }
+  // ngAfterViewInit(): void {
+  //   console.log('Grid ref:', this.grid);
+  // }
+  
+ 
+  exportExcel(): void {
+    if (this.grid) {
+      this.grid.saveAsExcel();  // Should work now
+    } else {
+      console.warn("Grid reference is undefined.");
+    }
+  }
+  
 
   public flagURL(dataItem: { country: string }): string {
     const code: string = dataItem.country;
@@ -110,7 +132,7 @@ export class HomeComponent implements OnInit {
   // dropDowntree
   public areaData: AreaData[] = [
     {
-      text: "America",
+      text: "View Lead",
       id: 1,
       areas: [
         { text: "Chicago", id: 4 },
@@ -120,7 +142,7 @@ export class HomeComponent implements OnInit {
       ],
     },
     {
-      text: "Europe",
+      text: "Edit Lead",
       id: 6,
       areas: [
         { text: "Amsterdam", id: 7 },
@@ -130,7 +152,7 @@ export class HomeComponent implements OnInit {
       ],
     },
     {
-      text: "Europe",
+      text: "Assigned to Sales Rep",
       id: 6,
       areas: [
         { text: "Amsterdam", id: 7 },
@@ -140,7 +162,7 @@ export class HomeComponent implements OnInit {
       ],
     },
     {
-      text: "Europe",
+      text: "Schedule Appoitment",
       id: 6,
       areas: [
         { text: "Amsterdam", id: 7 },
@@ -150,7 +172,7 @@ export class HomeComponent implements OnInit {
       ],
     },
     {
-      text: "Europe",
+      text: "Possible Matches",
       id: 6,
       areas: [
         { text: "Amsterdam", id: 7 },
@@ -160,7 +182,7 @@ export class HomeComponent implements OnInit {
       ],
     },
     {
-      text: "Europe",
+      text: "Tie and Untie Qualified Leads",
       id: 6,
       areas: [
         { text: "Amsterdam", id: 7 },
@@ -170,7 +192,7 @@ export class HomeComponent implements OnInit {
       ],
     },
     {
-      text: "Europe",
+      text: "Audit trail",
       id: 6,
       areas: [
         { text: "Amsterdam", id: 7 },
@@ -180,7 +202,7 @@ export class HomeComponent implements OnInit {
       ],
     },
     {
-      text: "Europe",
+      text: "Estimates",
       id: 6,
       areas: [
         { text: "Amsterdam", id: 7 },
@@ -250,6 +272,8 @@ export class HomeComponent implements OnInit {
       ],
     },
   ];
+
+
 }
 type AreaData = {
   text: string;
