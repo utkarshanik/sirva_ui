@@ -68,12 +68,13 @@
 
         <div class="col-6 d-flex justify-content-end justify-content-space-evenly g-2">
 
-          <div class="  rounded-5 p-1 px-2 d-flex align-items-center justify-content-between w-25  bluebt">
+             <div class="  rounded-5 p-1 px-2 d-flex align-items-center justify-content-between w-25  bluebt">
 
-            <button kendoButton  (click)="onButtonClick()" title="Browse" class="greenbt rounded-5 w-75 h-75  mx-2">Non-Intl.</button>
-            
-            <button kendoButton (click)="onButtonClick()" title="Browse" class="greenbt rounded-5 w-75 h-75 mx-2">Intl.</button>  
-          </div>
+              <button kendoButton  (click)="selectButton('non-intl')"  [ngClass]="['rounded-5', 'w-75', 'h-75', 'mx-2', selected === 'non-intl' ? 'active-btn' : 'inactive-btn']"  title="Browse" >Non-Intl.</button>
+              
+              <button kendoButton (click)="selectButton('intl')"  [ngClass]="['rounded-5', 'w-75', 'h-75', 'mx-2', selected === 'intl' ? 'active-btn' : 'inactive-btn']" 
+              title="Browse"> Intl.</button>  
+            </div>
 
           <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Clear Filters</button>
           <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2"> Bulk Edit</button>

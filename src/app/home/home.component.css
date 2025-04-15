@@ -59,3 +59,16 @@ background-color: #002266 !important;
   background-color: #88bb44;
   color: #fff;
 }
+
+/* Toogle button */
+.active-btn {
+  background-color: #88bb44; /* or your preferred active color */
+  color: white;
+  border: none;
+}
+
+.inactive-btn {
+  background-color: transparent;
+  color: #fff; /* match with active border color */
+  /* border: 1px solid #007BFF; */
+}

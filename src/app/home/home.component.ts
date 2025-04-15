@@ -38,6 +38,15 @@ export class HomeComponent implements OnInit {
     "Pref 3"
 ];
 
+//Toggle
+//Toggle button
+selected: string = 'non-intl'; // default
+
+selectButton(type: string) {
+  this.selected = type;
+}
+
+
   @ViewChild(DataBindingDirective) dataBinding!: DataBindingDirective;
   @ViewChild('myGrid') grid!: GridComponent;
 
@@ -53,7 +62,6 @@ export class HomeComponent implements OnInit {
   public ngOnInit(): void {
     this.gridView = this.gridData;
   }
-
 
   public onFilter(value: string): void {
     const inputValue = value;
