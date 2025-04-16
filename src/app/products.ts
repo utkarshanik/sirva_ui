@@ -14,8 +14,8 @@ export interface Product {
 export const products = [
   {
     ProductID: 1,
-    ProductName: "Chai fgfdgd",
-    SupplierID: 123423,
+    ProductName: "Chai",
+    SupplierID: 1,
     CategoryID: 1,
     QuantityPerUnit: "10 boxes x 20 bags",
     UnitPrice: 18.0,

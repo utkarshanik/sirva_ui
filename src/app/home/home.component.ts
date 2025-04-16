@@ -5,9 +5,9 @@ import { KENDO_CHARTS } from '@progress/kendo-angular-charts';
 import { KENDO_CHECKBOX, KENDO_INPUTS } from '@progress/kendo-angular-inputs';
 import { KENDO_GRID_PDF_EXPORT, KENDO_GRID_EXCEL_EXPORT } from '@progress/kendo-angular-grid';
 import { process } from '@progress/kendo-data-query';
-import { employees } from '../employees';
+import { products } from '../employees';
 import { filePdfIcon, fileExcelIcon, SVGIcon } from '@progress/kendo-svg-icons';
-import { images } from '../images';
+// import { images } from '../images';
 import { KENDO_BUTTONS, KENDO_DROPDOWNBUTTON } from '@progress/kendo-angular-buttons';
 import { KENDO_DROPDOWNLIST, KENDO_DROPDOWNTREE } from '@progress/kendo-angular-dropdowns';
 import { menuIcon } from '@progress/kendo-svg-icons'
@@ -16,11 +16,11 @@ import { IconsModule } from '@progress/kendo-angular-icons';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [KENDO_GRID,CommonModule,
-    KENDO_CHARTS,
-    KENDO_INPUTS,
-    KENDO_GRID_PDF_EXPORT,
-    KENDO_GRID_EXCEL_EXPORT,KENDO_CHECKBOX,KENDO_BUTTONS,KENDO_DROPDOWNLIST,IconsModule,KENDO_DROPDOWNTREE],
+    imports: [KENDO_GRID,CommonModule,
+      KENDO_CHARTS,
+      KENDO_INPUTS,
+      KENDO_GRID_PDF_EXPORT,
+      KENDO_GRID_EXCEL_EXPORT,KENDO_CHECKBOX,KENDO_BUTTONS,KENDO_DROPDOWNLIST,IconsModule,KENDO_DROPDOWNTREE],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -52,7 +52,7 @@ selectButton(type: string) {
 
   
  
-  public gridData: unknown[] = employees;
+  public gridData: unknown[] = products;
   public gridView: unknown[] = [];
   public menuIcon = menuIcon;
   public mySelection: string[] = [];
@@ -101,12 +101,12 @@ selectButton(type: string) {
     this.dataBinding.skip = 0;
   }
 
-  public photoURL(dataItem: { img_id: string; gender: string }): string {
-    const code: string = dataItem.img_id + dataItem.gender;
-    const image: { [Key: string]: string } = images;
+  // public photoURL(dataItem: { img_id: string; gender: string }): string {
+  //   const code: string = dataItem.img_id + dataItem.gender;
+  //   // const image: { [Key: string]: string } = images;
 
-    return image[code];
-  }
+  //   // return image[code];
+  // }
   // ngAfterViewInit(): void {
   //   console.log('Grid ref:', this.grid);
   // }
@@ -121,12 +121,12 @@ selectButton(type: string) {
   }
   
 
-  public flagURL(dataItem: { country: string }): string {
-    const code: string = dataItem.country;
-    const image: { [Key: string]: string } = images;
+  // public flagURL(dataItem: { country: string }): string {
+  //   const code: string = dataItem.country;
+  //   // const image: { [Key: string]: string } = images;
 
-    return image[code];
-  }
+  //   return image[code];
+  // }
   
   onButtonClick()
   {
