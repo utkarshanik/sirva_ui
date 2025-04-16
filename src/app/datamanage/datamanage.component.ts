@@ -132,6 +132,15 @@ public onFilter(value: string): void {
   this.dataBinding.skip = 0;
 }
 
+// Excel sheet 
+exportExcel(): void {
+  if (this.grid) {
+    this.grid.saveAsExcel();  // Should work now
+  } else {
+    console.warn("Grid reference is undefined.");
+  }
+}
+
 // buuton function -------------------------------
 onButtonClick() {
   // Add your button click logic here
@@ -153,6 +162,62 @@ selectButton(type: string) {
     "Pref 2",
     "Pref 3"
 ];
+
+// DropDown
+public areaData: AreaData[] = [
+  {
+    text: "View Lead",
+    id: 1,
+    areas: [
+      { text: "Chicago", id: 4 },
+      { text: "Los Angeles", id: 3 },
+      { text: "New York", id: 2 },
+      { text: "San Francisco", id: 5 },
+    ],
+  },
+  {
+    text: "Edit Lead",
+    id: 6,
+    areas: [
+      { text: "Amsterdam", id: 7 },
+      { text: "Barcelona", id: 10 },
+      { text: "London", id: 8 },
+      { text: "Paris", id: 9 },
+    ],
+  },
+  {
+    text: "Assigned to Sales Rep",
+    id: 6,
+    areas: [
+      { text: "Amsterdam", id: 7 },
+      { text: "Barcelona", id: 10 },
+      { text: "London", id: 8 },
+      { text: "Paris", id: 9 },
+    ],
+  },
+  {
+    text: "Schedule Appoitment",
+    id: 6,
+    areas: [
+      { text: "Amsterdam", id: 7 },
+      { text: "Barcelona", id: 10 },
+      { text: "London", id: 8 },
+      { text: "Paris", id: 9 },
+    ],
+  },
+  {
+    text: "Possible Matches",
+    id: 6,
+    areas: [
+      { text: "Amsterdam", id: 7 },
+      { text: "Barcelona", id: 10 },
+      { text: "London", id: 8 },
+      { text: "Paris", id: 9 },
+    ],
+  },
+
+];
+
 }
 
 
@@ -170,3 +235,15 @@ const createFormGroup = (dataItem: Partial<Product>) =>
     ),
     CategoryID: new FormControl(dataItem.CategoryID, Validators.required),
   });
+
+
+  type AreaData = {
+    text: string;
+    id: number;
+    areas: Area[];
+  };
+  
+  type Area = {
+    text: string;
+    id: number;
+  };

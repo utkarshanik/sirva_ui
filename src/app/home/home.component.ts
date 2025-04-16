@@ -283,6 +283,7 @@ selectButton(type: string) {
 
 
 }
+
 type AreaData = {
   text: string;
   id: number;

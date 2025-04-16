@@ -1,4 +1,31 @@
 
+<div class="d-flex justify-content-arround align-items-center mb-3">
+  <div class="col-6">
+    <h2 class="manage"> Lead Management |  <span class="lead">Leads</span> </h2>
+  </div>
+
+  <div class=" d-flex justify-content-end align-items-center col-6">
+
+    <div>
+        <input type="checkbox" id="checkbox2" kendoCheckBox />
+        <label class="k-checkbox-label" for="checkbox2">Board View</label>
+    </div>
+
+    <div class="m-2">
+      <button kendoButton type="button" (click)="exportExcel()"  class="greenbt" >
+        <img src="assets/export.png" alt="">
+        Export To Excel</button>
+    </div>
+
+    <div>
+      <button kendoButton (click)="onButtonClick()" title="Browse" class="greenbt">Create</button>
+    </div>
+
+  </div>
+
+</div>
+
+
 <div class="grid">
   <kendo-grid
         #myGrid
@@ -70,7 +97,7 @@
         [columnMenu]="false" [showSelectAll]="true">
       </kendo-grid-checkbox-column>
       
-        <!-- <kendo-grid-column field="full_name" title="Actions" [width]="150">
+        <kendo-grid-column field="full_name" title="Actions" [width]="130">
           <ng-template kendoGridCellTemplate let-dataItem>
               <kendo-dropdowntree
                 kendoDropDownTreeExpandable
@@ -81,15 +108,9 @@
                 placeholder="Actions">
               </kendo-dropdowntree>
           </ng-template>
-        </kendo-grid-column> -->
+        </kendo-grid-column> 
 
-        <kendo-grid-column field="ProductID" title="Record Id" [width]="150">
-        </kendo-grid-column>
-
-        <kendo-grid-column field="ProductName" title="Last Name" [width]="150" [class]="{ 'text-center': true }" [resizable]="false" >
-        </kendo-grid-column>
-
-        <kendo-grid-command-column [width]="220">
+        <kendo-grid-command-column [width]="180">
           <ng-template kendoGridCellTemplate let-isNew="isNew">
             <button kendoGridEditCommand [primary]="true">Edit</button>
             <button kendoGridRemoveCommand>Remove</button>
@@ -103,24 +124,30 @@
           </ng-template>
         </kendo-grid-command-column>
 
-        <!-- <kendo-grid-column field="full_name" title="First Name" [width]="150" [class]="{ 'text-center': true }" [resizable]="false"
+        <kendo-grid-column field="ProductID" title="Record Id" [width]="150">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="ProductName" title="Last Name" [width]="150" [class]="{ 'text-center': true }" [resizable]="false" >
+        </kendo-grid-column>
+
+        <kendo-grid-column field="QuantityPerUnit" title="First Name" [width]="150" [class]="{ 'text-center': true }" [resizable]="false"
         filter="boolean">
         </kendo-grid-column>
 
-        <kendo-grid-column field="address" title="Primary Email Address" [width]="190">
+        <kendo-grid-column field="UnitPrice" title="Primary Email Address" [width]="190">
         </kendo-grid-column>
 
-        <kendo-grid-column field="phone" title="Primary Phone Type" [width]="190">
+        <kendo-grid-column field="SupplierID" title="Primary Phone Type" [width]="190">
         </kendo-grid-column>
 
-        <kendo-grid-column field="budget" title="LMP Lead Id" [width]="130" filter="numeric">
+        <kendo-grid-column field="UnitsInStock" title="LMP Lead Id" [width]="130" filter="numeric">
         </kendo-grid-column>
 
-        <kendo-grid-column field="phone" title="Appoitment Type" [width]="150">
+        <kendo-grid-column field="UnitsOnOrder" title="Appoitment Type" [width]="150">
         </kendo-grid-column>
 
-        <kendo-grid-column field="target" title="Booking Agency" [width]="150">
-        </kendo-grid-column> -->
+        <kendo-grid-column field="ReorderLevel" title="Booking Agency" [width]="150">
+        </kendo-grid-column> 
 
       <!-- <kendo-grid-pdf fileName="Employees.pdf" [repeatHeaders]="true"></kendo-grid-pdf> -->
       <kendo-grid-excel fileName="data.xlsx"></kendo-grid-excel>
