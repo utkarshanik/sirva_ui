@@ -1,0 +1,46 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "ProductName": "Chai",
+      "UnitPrice": 18,
+      "UnitsInStock": 39,
+      "CategoryID": 1,
+      "ProductID": 1,
+      "SupplierID": 1,
+      "QuantityPerUnit": "10 boxes x 20 bags",
+      "UnitsOnOrder": 0,
+      "ReorderLevel": 10,
+      "Discontinued": false
+    }
+    ,
+    {
+      "id": "2",
+      "ProductName": "Chang",
+      "UnitPrice": 19,
+      "UnitsInStock": 17,
+      "CategoryID": 1,
+      "ProductID": 2,
+      "SupplierID": 1,
+      "QuantityPerUnit": "24 - 12 oz bottles",
+      "UnitsOnOrder": 40,
+      "ReorderLevel": 25,
+      "Discontinued": false
+    }
+    ,
+    {
+      "id": "3",
+      "ProductName": "Aniseed Syrup",
+      "UnitPrice": 10,
+      "UnitsInStock": 13,
+      "CategoryID": 2,
+      "ProductID": 3,
+      "SupplierID": 1,
+      "QuantityPerUnit": "12 - 550 ml bottles",
+      "UnitsOnOrder": 70,
+      "ReorderLevel": 25,
+      "Discontinued": false
+    }
+    
+  ]
+}

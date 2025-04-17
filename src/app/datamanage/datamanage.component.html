@@ -28,49 +28,35 @@
 
 <div class="grid">
   <kendo-grid
-        #myGrid
-        [kendoGridBinding]="gridData2"
-        kendoGridSelectBy="id"
-        [(selectedKeys)]="mySelection"
-        [selectable]="{ mode: 'multiple', drag: false }"
-        [pageSize]="20"
-        [pageable]="true"
-        [sortable]="true"
-        [groupable]="true"
-        [reorderable]="true"
-        [resizable]="true"  
-        [height]="500"
-        [columnMenu]="{ filter: true }"
-          [data]="gridData"
-      (edit)="editHandler($event)"
-      (cancel)="cancelHandler($event)"
-      (save)="saveHandler($event)"
-      (remove)="removeHandler($event)"
-      (add)="addHandler($event)"
-        >
+  [data]="gridData"
+  [height]="500"
+  [pageable]="true"
+  [sortable]="true"
+  [groupable]="true"
+  [reorderable]="true"
+  [resizable]="true"
+  (edit)="editHandler($event)"
+  (cancel)="cancelHandler($event)"
+  (save)="saveHandler($event)"
+  (remove)="removeHandler($event)"
+  (add)="addHandler($event)">
 
       <ng-template kendoGridToolbarTemplate>
-
         <div class="col-12 d-flex justify-content-between align-items-center">
-
         <div class="col- d-flex justify-content-space-between align-items-center">
-
           <div>
             <kendo-dropdownlist [style.width.px]="200" [data]="listItems" value="All Leads">
             </kendo-dropdownlist> 
           </div>
-
           <div class="mx-3">
               <kendo-dropdownlist [style.width.px]="200" [data]="listItems2" value="Select Saved Preference">
               </kendo-dropdownlist> 
           </div>
-          
           <kendo-textbox #searchBox [style.width.px]="200" placeholder="Type Search Keyword" (valueChange)="onFilter($event)"></kendo-textbox>
           <kendo-grid-spacer></kendo-grid-spacer>
           <div class="greenbt p-2 rounded-3 ms-2" (click)="onFilter(searchBox.value)">
             <img src="assets/icons8-search-25.png" alt="Search Icon">
           </div>
-
         </div>
 
         <div class="col-6 d-flex justify-content-end justify-content-space-evenly g-2">
@@ -97,32 +83,32 @@
         [columnMenu]="false" [showSelectAll]="true">
       </kendo-grid-checkbox-column>
       
-        <kendo-grid-column field="full_name" title="Actions" [width]="130">
-          <ng-template kendoGridCellTemplate let-dataItem>
-              <kendo-dropdowntree
-                kendoDropDownTreeExpandable
-                [kendoDropDownTreeHierarchyBinding]="areaData"
-                textField="text"
-                valueField="id"
-                childrenField="areas"
-                placeholder="Actions">
-              </kendo-dropdowntree>
-          </ng-template>
-        </kendo-grid-column> 
+      <kendo-grid-column field="full_name" title="Actions" [width]="130" [sticky]="true">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <kendo-dropdowntree
+            kendoDropDownTreeExpandable
+            [kendoDropDownTreeHierarchyBinding]="areaData"
+            textField="text"
+            valueField="id"
+            childrenField="areas"
+            placeholder="Actions"
+            (click)="$event.stopPropagation()">
+          </kendo-dropdowntree>
+        </ng-template>
+      </kendo-grid-column> 
 
         <kendo-grid-command-column [width]="180">
-          <ng-template kendoGridCellTemplate let-isNew="isNew">
-            <button kendoGridEditCommand [primary]="true">Edit</button>
-            <button kendoGridRemoveCommand>Remove</button>
-           <button kendoGridSaveCommand [disabled]="!!formGroup?.invalid">
-              {{ isNew ? "Add" : "Update" }}
-            </button>
-  
-            <button kendoGridCancelCommand>
-              {{ isNew ? "Discard changes" : "Cancel" }}
-            </button>
-          </ng-template>
-        </kendo-grid-command-column>
+    <ng-template kendoGridCellTemplate let-isNew="isNew">
+      <button kendoGridEditCommand [primary]="true">Edit</button>
+      <button kendoGridRemoveCommand>Remove</button>
+      <button kendoGridSaveCommand [disabled]="!!formGroup?.invalid">
+        {{ isNew ? 'Add' : 'Update' }}
+      </button>
+      <button kendoGridCancelCommand>
+        {{ isNew ? 'Discard changes' : 'Cancel' }}
+      </button>
+    </ng-template>
+  </kendo-grid-command-column>
 
         <kendo-grid-column field="ProductID" title="Record Id" [width]="150">
         </kendo-grid-column>

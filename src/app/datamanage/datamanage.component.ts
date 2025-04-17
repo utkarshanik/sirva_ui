@@ -19,19 +19,18 @@ import {
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
-import { log } from 'console';
-
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-datamanage',
-  imports: [KENDO_GRID,CommonModule,
+  imports: [KENDO_GRID,CommonModule,HttpClientModule,
     KENDO_CHARTS,
     KENDO_INPUTS,
     KENDO_GRID_PDF_EXPORT,
     KENDO_GRID_EXCEL_EXPORT,KENDO_BUTTONS,KENDO_DROPDOWNLIST,IconsModule,DropDownTreeComponent,KENDO_DROPDOWNTREE,KENDO_CHECKBOX,],
     providers: [DataservieService],
   templateUrl: './datamanage.component.html',
-  styleUrl: './datamanage.component.css'
+  styleUrl: './datamanage.component.css',
 })
 
 export class DatamanageComponent implements OnInit {
@@ -41,25 +40,31 @@ export class DatamanageComponent implements OnInit {
  public mySelection: string[] = [];
  public pdfSVG: SVGIcon = filePdfIcon;
  public excelSVG: SVGIcon = fileExcelIcon;
-
  public gridData2: Product[] = [];
  public formGroup: FormGroup | undefined;
  private editedRowIndex: number | undefined = undefined;
- 
 
   constructor(private service: DataservieService) {}
 
   public ngOnInit(): void {
-    this.gridView = this.gridData;
-    this.gridData2 = this.service.products();
+    // this.gridView = this.gridData;
+    // this.gridData2 = this.service.products();
     // console.log(this.gridData2);
+    this.loadProducts();
+  }
+
+
+  private loadProducts(): void {
+    this.service.products().subscribe((data) => {
+      this.gridData = data;
+    });
   }
 
   public addHandler({ sender }: AddEvent): void {
     this.closeEditor(sender);
 
     this.formGroup = createFormGroup({
-      ProductName: "",
+      ProductName: '',
       UnitPrice: 0,
       UnitsInStock: 0,
       CategoryID: 1,
@@ -67,6 +72,47 @@ export class DatamanageComponent implements OnInit {
 
     sender.addRow(this.formGroup);
   }
+
+  public saveHandler({ sender, rowIndex, formGroup, isNew }: SaveEvent): void {
+    const product = formGroup.value;
+  
+    console.log('Saving product:', product); // Debug log to check the product object
+  
+    if (isNew) {
+      this.service.addProduct(product).subscribe(() => this.loadProducts());
+    } else {
+      if (!product.id) {
+        console.error('Product ID is missing:', product); // Log error if ID is missing
+        return;
+      }
+      this.service.updateProduct(product).subscribe(() => this.loadProducts());
+    }
+  
+    sender.closeRow(rowIndex);
+  }
+  
+  public removeHandler({ dataItem }: RemoveEvent): void {
+    this.service.removeProduct(dataItem).subscribe(() => this.loadProducts());
+  }
+
+  private closeEditor(grid: GridComponent, rowIndex = this.editedRowIndex): void {
+    grid.closeRow(rowIndex);
+    this.editedRowIndex = undefined;
+    this.formGroup = undefined;
+  }
+
+  // public addHandler({ sender }: AddEvent): void {
+  //   this.closeEditor(sender);
+
+  //   this.formGroup = createFormGroup({
+  //     ProductName: "",
+  //     UnitPrice: 0,
+  //     UnitsInStock: 0,
+  //     CategoryID: 1,
+  //   });
+
+  //   sender.addRow(this.formGroup);
+  // }
 
   public editHandler({ sender, rowIndex, dataItem }: EditEvent): void {
     this.closeEditor(sender);
@@ -82,28 +128,27 @@ export class DatamanageComponent implements OnInit {
     this.closeEditor(sender, rowIndex);
   }
 
-  public saveHandler({ sender, rowIndex, formGroup, isNew }: SaveEvent): void {
-    const product = formGroup.value;
+  // public saveHandler({ sender, rowIndex, formGroup, isNew }: SaveEvent): void {
+  //   const product = formGroup.value;
 
-    this.service.save(product, isNew);
+  //   this.service.save(product, isNew);
 
-    sender.closeRow(rowIndex);
-  }
+  //   sender.closeRow(rowIndex);
+  // }
 
-  public removeHandler({ dataItem }: RemoveEvent): void {
-    this.service.remove(dataItem);
-  }
+  // public removeHandler({ dataItem }: RemoveEvent): void {
+  //   this.service.remove(dataItem);
+  // }
 
-  private closeEditor(
-    grid: GridComponent,
-    rowIndex = this.editedRowIndex
-  ): void {
-    grid.closeRow(rowIndex);
-    this.editedRowIndex = undefined;
-    this.formGroup = undefined;
-  }
+  // private closeEditor(
+  //   grid: GridComponent,
+  //   rowIndex = this.editedRowIndex
+  // ): void {
+  //   grid.closeRow(rowIndex);
+  //   this.editedRowIndex = undefined;
+  //   this.formGroup = undefined;
+  // }
  
-
  @ViewChild(DataBindingDirective) dataBinding!: DataBindingDirective;
  @ViewChild('myGrid') grid!: GridComponent;
 
@@ -220,22 +265,17 @@ public areaData: AreaData[] = [
 
 }
 
-
 const createFormGroup = (dataItem: Partial<Product>) =>
   new FormGroup({
-    ProductID: new FormControl(dataItem.ProductID),
+    id: new FormControl(dataItem.id), // Ensure this is included
     ProductName: new FormControl(dataItem.ProductName, Validators.required),
     UnitPrice: new FormControl(dataItem.UnitPrice),
     UnitsInStock: new FormControl(
       dataItem.UnitsInStock,
-      Validators.compose([
-        Validators.required,
-        Validators.pattern("^[0-9]{1,3}"),
-      ])
+      Validators.compose([Validators.required, Validators.pattern('^[0-9]{1,3}')])
     ),
     CategoryID: new FormControl(dataItem.CategoryID, Validators.required),
   });
-
 
   type AreaData = {
     text: string;

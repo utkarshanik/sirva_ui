@@ -1,36 +1,34 @@
+// filepath: c:\Users\UtkarshaNikam\Desktop\sirva_ui_Again\src\app\services\dataservie.service.ts
 import { Injectable } from '@angular/core';
-import { Product,products } from '../employees';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Product } from '../products';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataservieService {
-    private data: Product[] = products;
-    private counter: number = products.length;
-  
-    public products(): Product[] {
-      return this.data;
-    }
-  
-    public remove(product: Product): void {
-      const index = this.data.findIndex(
-        ({ ProductID }) => ProductID === product.ProductID
-      );
-      this.data.splice(index, 1);
-    }
-  
-    public save(product: Product, isNew: boolean): void {
-      if (isNew) {
-        product.ProductID = this.counter++;
-        this.data.splice(0, 0, product);
-      } else {
-        const existingProduct = this.data.find(({ ProductID }) => ProductID === product.ProductID);
-        if (existingProduct) {
-          Object.assign(existingProduct, product);
-        }
-      }
-    }
+  private baseUrl = 'http://localhost:3000/products'; // JSON Server URL
 
+  constructor(private http: HttpClient) {}
 
+  // Get all products
+  public products(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.baseUrl);
+  }
+
+  // Add a new product
+  public addProduct(product: Product): Observable<Product> {
+    return this.http.post<Product>(this.baseUrl, product);
+  }
+
+  // Update an existing product
+  public updateProduct(product: Product): Observable<Product> {
+    return this.http.put<Product>(`${this.baseUrl}/${product.id}`, product);
+  }
+
+  // Delete a product
+  public removeProduct(product: Product): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${product.id}`);
+  }
 }
