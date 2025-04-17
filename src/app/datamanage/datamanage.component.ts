@@ -11,7 +11,8 @@ import { KENDO_BUTTONS, KENDO_DROPDOWNBUTTON } from '@progress/kendo-angular-but
 import { DropDownTreeComponent, KENDO_DROPDOWNLIST, KENDO_DROPDOWNTREE } from '@progress/kendo-angular-dropdowns';
 import { menuIcon } from '@progress/kendo-svg-icons'
 import { IconsModule } from '@progress/kendo-angular-icons';
-import { products,Product } from '../employees';
+// import { products,Product } from '../employees';
+import { Product } from '../products';
 import { DataservieService } from '../services/dataservie.service';
 import {
   FormControl,
@@ -34,8 +35,8 @@ import { HttpClientModule } from '@angular/common/http';
 })
 
 export class DatamanageComponent implements OnInit {
- public gridData: unknown[] = products;
- public gridView: unknown[] = [];
+ public gridData: Product[] = [];
+//  public gridView: unknown[] = [];
  public menuIcon = menuIcon;
  public mySelection: string[] = [];
  public pdfSVG: SVGIcon = filePdfIcon;
@@ -65,9 +66,14 @@ export class DatamanageComponent implements OnInit {
 
     this.formGroup = createFormGroup({
       ProductName: '',
-      UnitPrice: 0,
+      UnitPrice: "0",
       UnitsInStock: 0,
-      CategoryID: 1,
+      CategoryID: 0,
+      SupplierID: 0,
+      QuantityPerUnit: "0",
+      UnitsOnOrder: 0,
+      ReorderLevel: "0",
+      ProductID: 0,
     });
 
     sender.addRow(this.formGroup);
@@ -156,7 +162,7 @@ export class DatamanageComponent implements OnInit {
 public onFilter(value: string): void {
   const inputValue = value;
   console.log(inputValue);
-  this.gridView = process(this.gridData, {
+  this.gridData = process(this.gridData, {
     filter: {
       logic: "or",
       filters: [
@@ -268,6 +274,7 @@ public areaData: AreaData[] = [
 const createFormGroup = (dataItem: Partial<Product>) =>
   new FormGroup({
     id: new FormControl(dataItem.id), // Ensure this is included
+    ProductID: new FormControl(dataItem.ProductID, Validators.required),
     ProductName: new FormControl(dataItem.ProductName, Validators.required),
     UnitPrice: new FormControl(dataItem.UnitPrice),
     UnitsInStock: new FormControl(
@@ -275,6 +282,11 @@ const createFormGroup = (dataItem: Partial<Product>) =>
       Validators.compose([Validators.required, Validators.pattern('^[0-9]{1,3}')])
     ),
     CategoryID: new FormControl(dataItem.CategoryID, Validators.required),
+    SupplierID: new FormControl(dataItem.SupplierID), // Add SupplierID
+    QuantityPerUnit: new FormControl(dataItem.QuantityPerUnit), // Add QuantityPerUnit
+    UnitsOnOrder: new FormControl(dataItem.UnitsOnOrder), // Add UnitsOnOrder
+    ReorderLevel: new FormControl(dataItem.ReorderLevel), // Add ReorderLevel
+    Discontinued: new FormControl(dataItem.Discontinued), // Add Discontinued
   });
 
   type AreaData = {

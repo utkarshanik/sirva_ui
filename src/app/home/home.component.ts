@@ -5,13 +5,14 @@ import { KENDO_CHARTS } from '@progress/kendo-angular-charts';
 import { KENDO_CHECKBOX, KENDO_INPUTS } from '@progress/kendo-angular-inputs';
 import { KENDO_GRID_PDF_EXPORT, KENDO_GRID_EXCEL_EXPORT } from '@progress/kendo-angular-grid';
 import { process } from '@progress/kendo-data-query';
-import { products } from '../employees';
+
 import { filePdfIcon, fileExcelIcon, SVGIcon } from '@progress/kendo-svg-icons';
 // import { images } from '../images';
 import { KENDO_BUTTONS, KENDO_DROPDOWNBUTTON } from '@progress/kendo-angular-buttons';
 import { KENDO_DROPDOWNLIST, KENDO_DROPDOWNTREE } from '@progress/kendo-angular-dropdowns';
 import { menuIcon } from '@progress/kendo-svg-icons'
 import { IconsModule } from '@progress/kendo-angular-icons';
+import { Product } from '../products';
 
 @Component({
   selector: 'app-home',
@@ -52,7 +53,7 @@ selectButton(type: string) {
 
   
  
-  public gridData: unknown[] = products;
+  public gridData: Product[] = [];
   public gridView: unknown[] = [];
   public menuIcon = menuIcon;
   public mySelection: string[] = [];
