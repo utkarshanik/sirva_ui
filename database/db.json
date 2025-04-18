@@ -2,8 +2,8 @@
   "products": [
     {
       "id": "1",
-      "ProductID": 3,
-      "ProductName": "Aniseed Syrupvbv",
+      "ProductID": "3",
+      "ProductName": "Aniseed ",
       "UnitPrice": "utk@gmail.com",
       "UnitsInStock": 13,
       "CategoryID": 2,
@@ -15,7 +15,7 @@
     },
     {
       "id": "2",
-      "ProductID": 4,
+      "ProductID": "45",
       "ProductName": "skfjs",
       "UnitPrice": "ght@gmail.com",
       "UnitsInStock": 53,

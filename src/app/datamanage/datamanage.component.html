@@ -1,4 +1,3 @@
-
 <div class="d-flex justify-content-arround align-items-center mb-3">
   <div class="col-6">
     <h2 class="manage"> Lead Management |  <span class="lead">Leads</span> </h2>
@@ -40,7 +39,8 @@
   (cancel)="cancelHandler($event)"
   (save)="saveHandler($event)"
   (remove)="removeHandler($event)"
-  (add)="addHandler($event)">
+  (add)="addHandler($event)"
+  (dblclick)="rowClickHandler($event)">
 
       <ng-template kendoGridToolbarTemplate>
         <div class="col-12 d-flex justify-content-between align-items-center">
