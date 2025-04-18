@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { KENDO_GRID, DataBindingDirective, GridComponent, EditEvent, AddEvent, CancelEvent, SaveEvent, RemoveEvent } from '@progress/kendo-angular-grid';
+import { KENDO_GRID, DataBindingDirective, GridComponent, EditEvent, AddEvent, CancelEvent, SaveEvent, RemoveEvent, GridModule, ColumnMenuSettings } from '@progress/kendo-angular-grid';
 import { KENDO_CHARTS } from '@progress/kendo-angular-charts';
 import { KENDO_CHECKBOX, KENDO_INPUTS } from '@progress/kendo-angular-inputs';
 import { KENDO_GRID_PDF_EXPORT, KENDO_GRID_EXCEL_EXPORT } from '@progress/kendo-angular-grid';
@@ -22,7 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-datamanage',
-  imports: [KENDO_GRID,CommonModule,HttpClientModule,
+  imports: [KENDO_GRID, GridModule, CommonModule, HttpClientModule,
     KENDO_CHARTS,
     KENDO_INPUTS,
     KENDO_GRID_PDF_EXPORT,
@@ -41,6 +41,21 @@ export class DatamanageComponent implements OnInit {
  public gridData2: Product[] = [];
  public formGroup: FormGroup | undefined;
  private editedRowIndex: number | undefined = undefined;
+ private currentlyEditedRow: number | undefined;
+
+  // Add column menu settings
+  public columnMenuSettings: ColumnMenuSettings = {
+    filter: true,
+    columnChooser: true
+  };
+
+  // Add sort settings
+  public sort: Array<any> = [
+    {
+      field: 'ProductID',
+      dir: 'asc'
+    }
+  ];
 
   constructor(private service: DataservieService) {}
 
@@ -72,8 +87,11 @@ export class DatamanageComponent implements OnInit {
     sender.addRow(this.formGroup);
   }
 
-  public saveHandler({ sender, rowIndex, formGroup, isNew }: SaveEvent): void {
-    const product = formGroup.value;
+  public saveHandler({ sender, rowIndex, formGroup, isNew, dataItem }: SaveEvent): void {
+    const product = {
+      ...formGroup.value,
+      id: dataItem.id  // Ensure we include the original item's ID
+    };
   
     console.log('Saving product:', product);
   
@@ -84,10 +102,18 @@ export class DatamanageComponent implements OnInit {
         console.error('Product ID is missing:', product);
         return;
       }
-      this.service.updateProduct(product).subscribe(() => this.loadProducts());
+      this.service.updateProduct(product).subscribe(
+        () => {
+          this.loadProducts();
+          sender.closeRow(rowIndex);
+          this.formGroup = undefined;
+          this.editedRowIndex = undefined;
+        },
+        error => {
+          console.error('Error updating product:', error);
+        }
+      );
     }
-  
-    sender.closeRow(rowIndex);
   }
   
   public removeHandler({ dataItem }: RemoveEvent): void {
@@ -104,6 +130,7 @@ export class DatamanageComponent implements OnInit {
     this.closeEditor(sender);
     this.formGroup = createFormGroup(dataItem);
     this.editedRowIndex = rowIndex;
+    this.currentlyEditedRow = rowIndex;
     sender.editRow(rowIndex, this.formGroup);
   }
 
@@ -235,6 +262,51 @@ export class DatamanageComponent implements OnInit {
         rowIndex,
         dataItem,
         isNew: false
+      });
+    }
+  }
+
+  public onGridBlur(event: any): void {
+    if (this.currentlyEditedRow !== undefined && this.formGroup) {
+      const data = this.grid.data as Product[] | null;
+      const dataItem = data && this.currentlyEditedRow !== undefined ? data[this.currentlyEditedRow] : null;
+      // Save the changes
+      this.saveHandler({
+        sender: this.grid,
+        rowIndex: this.currentlyEditedRow,
+        formGroup: this.formGroup,
+        isNew: false,
+        dataItem
+      });
+      this.currentlyEditedRow = undefined;
+    }
+  }
+
+  public onCellClose(args: any): void {
+    if (this.formGroup?.dirty && this.editedRowIndex !== undefined) {
+      const data = this.grid.data as Product[] | null;
+      const dataItem = data && this.editedRowIndex !== undefined ? data[this.editedRowIndex] : null;
+      this.saveHandler({
+        sender: this.grid,
+        rowIndex: this.editedRowIndex,
+        formGroup: this.formGroup,
+        isNew: false,
+        dataItem
+      });
+    }
+  }
+
+  public onCellBlur(args: any): void {
+    if (this.formGroup?.dirty) {
+      const dataItem = args.dataItem;
+      const formGroup = args.formGroup || this.formGroup;
+      
+      this.saveHandler({
+        sender: this.grid,
+        rowIndex: this.editedRowIndex || args.rowIndex,
+        formGroup: formGroup,
+        isNew: false,
+        dataItem
       });
     }
   }

@@ -24,7 +24,9 @@ export class DataservieService {
 
   // Update an existing product
   public updateProduct(product: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.baseUrl}/${product.id}`, product);
+    const url = `${this.baseUrl}/${product.id}`;
+    console.log('Updating product at URL:', url, 'with data:', product);
+    return this.http.patch<Product>(url, product);
   }
 
   // Delete a product
