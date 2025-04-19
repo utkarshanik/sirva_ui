@@ -99,6 +99,7 @@ export class DatamanageComponent implements OnInit {
   
     if (isNew) {
       this.service.addProduct(product).subscribe(() => this.loadProducts());
+      this.closeEditor(sender, rowIndex);
     } else {
       if (!product.id) {
         console.error('Product ID is missing:', product);

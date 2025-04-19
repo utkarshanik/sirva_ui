@@ -2,8 +2,6 @@
 {
   font-size: 0.7em;
   font-weight: 400;
-  /* color: #333; */
-  /* margin-bottom: 20px; */
 }
 
 .manage
@@ -18,6 +16,11 @@
 }
 
 .bluebt
+{
+  background-color: #002266;
+  color: #fff;
+}    
+.bluebt2
 {
   background-color: #002266;
   color: #fff;
@@ -50,15 +53,6 @@
   font-weight: 600;
 }
 
-.k-grid .k-grid-header .k-table-th  {
-background-color: #002266 !important;
-}
-
-.k-picker-solid
-{
-  background-color: #88bb44;
-  color: #fff;
-}
 
 /* Toogle button */
 .active-btn {
@@ -69,6 +63,7 @@ background-color: #002266 !important;
 
 .inactive-btn {
   background-color: transparent;
+  border: none;
   color: #fff; /* match with active border color */
   /* border: 1px solid #007BFF; */
 }

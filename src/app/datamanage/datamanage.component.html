@@ -25,7 +25,7 @@
 </div>
 
 
-<div class="grid">
+<div class="grid ">
   <kendo-grid
   #myGrid
   [data]="gridData"
@@ -48,7 +48,7 @@
   (cellBlur)="onCellBlur($event)"
   (sortChange)="onSortChange($event)">
 
-      <ng-template kendoGridToolbarTemplate>
+      <ng-template kendoGridToolbarTemplate class="p-0">
         <div class="col-12 d-flex justify-content-between align-items-center">
         <div class="col- d-flex justify-content-space-between align-items-center">
     
@@ -70,7 +70,7 @@
 
         <div class="col-6 d-flex justify-content-end justify-content-space-evenly g-2">
 
-             <div class="  rounded-5 p-1 px-2 d-flex align-items-center justify-content-between w-25  bluebt">
+             <div class="  rounded-5 p-1 px-2 d-flex align-items-center justify-content-between w-25  bluebt2">
 
               <button kendoButton  (click)="selectButton('non-intl')"  [ngClass]="['rounded-5', 'w-75', 'h-75', 'mx-2', selected === 'non-intl' ? 'active-btn' : 'inactive-btn']"  title="Browse" >Non-Intl.</button>
               
@@ -81,20 +81,19 @@
           <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Clear Filters</button>
           <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2"> Bulk Edit</button>
           <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Save Preference</button>
-          <button  kendoButton fillMode="flat">
-            <kendo-svgicon [icon]="menuIcon"></kendo-svgicon>
-          </button>
+
+            <button  kendoButton  fillMode="flat"  class="bbs" >
+              <kendo-svgicon [icon]="menuIcon" ></kendo-svgicon>
+            </button>
         </div>
       </div>
-      <div>
         <button kendoButton
         (click)="addHandler({sender: grid})"
-        class="greenbt m-1 "
+        class="greenbt mb-2 text-center"
         title="Add New Record">
-        <kendo-svgicon [icon]="plusIcon" class="text-center mb-1 " > </kendo-svgicon>
+        <kendo-svgicon [icon]="plusIcon" class="text-center mb-1 me-0" > </kendo-svgicon>
         Add 
       </button>
-    </div>
       </ng-template>
       
       <kendo-grid-checkbox-column [width]="45" [headerClass]="{ 'text-center': true }" [class]="{ 'text-center': true }" [resizable]="false"
@@ -115,7 +114,7 @@
         </ng-template>
       </kendo-grid-column> 
 
-      <kendo-grid-command-column [width]="180" [columnMenu]="false">
+      <kendo-grid-command-column [width]="180" [sticky]="true"   [columnMenu]="false">
         <ng-template kendoGridCellTemplate let-isNew="isNew">
           <button kendoGridEditCommand [primary]="true">Edit</button>
           <button kendoGridRemoveCommand>Remove</button>
