@@ -4,8 +4,8 @@ import { KENDO_GRID, DataBindingDirective, GridComponent, EditEvent, AddEvent, C
 import { KENDO_CHARTS } from '@progress/kendo-angular-charts';
 import { KENDO_CHECKBOX, KENDO_INPUTS } from '@progress/kendo-angular-inputs';
 import { KENDO_GRID_PDF_EXPORT, KENDO_GRID_EXCEL_EXPORT } from '@progress/kendo-angular-grid';
-import { process } from '@progress/kendo-data-query';
-import { filePdfIcon, fileExcelIcon, SVGIcon } from '@progress/kendo-svg-icons';
+import { process, SortDescriptor } from '@progress/kendo-data-query';
+import { filePdfIcon, fileExcelIcon, SVGIcon, plusIcon } from '@progress/kendo-svg-icons';
 import { KENDO_BUTTONS, KENDO_DROPDOWNBUTTON } from '@progress/kendo-angular-buttons';
 import { DropDownTreeComponent, KENDO_DROPDOWNLIST, KENDO_DROPDOWNTREE } from '@progress/kendo-angular-dropdowns';
 import { menuIcon } from '@progress/kendo-svg-icons'
@@ -35,6 +35,7 @@ import { HttpClientModule } from '@angular/common/http';
 export class DatamanageComponent implements OnInit {
  public gridData: Product[] = [];
  public menuIcon = menuIcon;
+ public plusIcon= plusIcon;
  public mySelection: string[] = [];
  public pdfSVG: SVGIcon = filePdfIcon;
  public excelSVG: SVGIcon = fileExcelIcon;
@@ -68,8 +69,9 @@ export class DatamanageComponent implements OnInit {
       this.gridData = data;
     });
   }
-
-  public addHandler({ sender }: AddEvent): void {
+  
+  public addHandler(args: AddEvent | { sender: any }): void {
+    const sender = args.sender || this.grid;
     this.closeEditor(sender);
 
     this.formGroup = createFormGroup({
@@ -245,6 +247,12 @@ export class DatamanageComponent implements OnInit {
       ],
     },
   ];
+  public dropdownSort: SortDescriptor[] = [];
+
+public onSortChange(sort: SortDescriptor[]): void {
+  this.dropdownSort = sort;
+  this.gridData = process(this.gridData, { sort }).data;
+}
 
   public rowClickHandler(event: any): void {
     const targetRow = event.target.closest('tr');

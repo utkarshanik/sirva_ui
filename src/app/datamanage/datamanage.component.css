@@ -94,3 +94,12 @@ background-color: #002266 !important;
     box-sizing: content-box;
 } */
 
+.k-button.greenbt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.k-button.greenbt .k-icon {
+  margin-right: 4px;
+}
