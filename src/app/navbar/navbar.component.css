@@ -1,3 +1,77 @@
+/* /Navbar */
+.bi {
+  font-style: normal !important;
+}
+
+
+nav {
+  background-color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-left {
+  display: flex;
+  justify-content: start;
+  margin-top: 20px;
+  gap: 5px;
+  font-size: 20rem;
+}
+ 
+.nav-right {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin-top: 40px;
+  gap: 5px;
+  margin: 2px;
+}
+
+/* Perosn */
+.user-info {
+  /* padding: 8px; */
+  background-color: #002c77;
+  border-radius: 4px;
+  padding: 4px;
+  border: none;
+}
+
+.user-info .bi {
+  font-size: 1.25rem;
+}
+
+.dark-mode {
+  background-color: #002c77;
+}
+.nav-left a,
+.nav-left .dropdown-toggle {
+  background-color: #002c77;
+  color: white !important;
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+.nav-left a.active,
+.nav-left .dropdown-toggle.active,
+.nav-left .dropdown-item.active {
+  background-color: #a4d65e !important;
+  color: white !important;
+}
+ 
+.nav-left a:hover,
+.nav-left .dropdown-toggle:hover {
+  background-color: #0040b3;
+  text-decoration: none;
+}
+
+
 kendo-tabstrip p {
     margin: 0;
     padding: 8px;

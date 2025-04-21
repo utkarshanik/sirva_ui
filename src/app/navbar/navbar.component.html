@@ -1,13 +1,35 @@
-<div class="navbar p-2">
-  <div class
-    ="d-flex flex-reverse mb-3 container-fluid">
-    <button kendoButton (click)="toggleDarkMode()" class="dark-mode-btn">
-      🌙 Dark Mode
-    </button>
-  </div>
+<div class="nav-right m-2">
+  <button class="dark-mode btn btn-outline-secondary" (click)="toggleDarkMode()">
+    <i class="bi bi-moon-fill fw-normal" *ngIf="!isDarkMode"><span class="m-1">Dark Mode </span></i>
+    <i class="bi bi-sun-fill fw-normal" *ngIf="isDarkMode"><span class="m-1">Light Mode</span></i>
+  </button>
 
-  
+ <button class="dark-mode btn btn-outline-secondary">
+   <a href="#"><i class="bi bi-envelope text-white"></i></a>
+  </button>
 
+  <button class="dark-mode btn btn-outline-secondary">
+    <a href="#"><i class="bi bi-gear text-white"></i></a>
+  </button>
+
+  <button class="dark-mode btn btn-outline-secondary">
+    <a class="bell-notification" href="#"><i class="bi bi-bell text-white"></i></a>
+  </button>
+
+  <button class="dark-mode btn btn-outline-secondary">
+    <a href="#"> <i class="bi bi-envelope-paper text-white"></i></a>
+  </button>
+    
+  <button class="user-info d-flex align-items-center">
+    <a href="#" class="me-2"> 
+      <i class="bi bi-person-circle text-white fs-5"></i>
+    </a> 
+    <span class="text-white">Admin</span>
+  </button>
+
+</div>
+
+<div class="navbar p-2">  
   <div class="container-fluid   d-flex justify-content-between align-items-center mb-2">
     <kendo-tabstrip class="my-tabstrip">
 
@@ -26,7 +48,7 @@
         <ng-template kendoTabTitle>
           <img src="assets/icons8-agent-25.png" alt="Dashboard Logo" class="dashboard-logo" />
           AGENT MANAGEMENT
-        </ng-template>
+         </ng-template>
         <ng-template kendoTabContent>
           <p>Tab 2 Content</p>
         </ng-template>
