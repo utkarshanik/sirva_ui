@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, ViewChild, CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { KENDO_GRID, DataBindingDirective, GridComponent, EditEvent, AddEvent, CancelEvent, SaveEvent, RemoveEvent, GridModule, ColumnMenuSettings, CellClickEvent } from '@progress/kendo-angular-grid';
 import { KENDO_CHARTS } from '@progress/kendo-angular-charts';
@@ -126,10 +126,13 @@ private loadProducts(): void {
   }
 
   private closeEditor(grid: GridComponent, rowIndex = this.editedRowIndex): void {
+    if (rowIndex !== undefined) {
       grid.closeRow(rowIndex);
-      this.editedRowIndex = undefined;
-      this.formGroup = undefined;
     }
+    this.editedRowIndex = undefined;
+    this.formGroup = undefined;
+    this.currentlyEditedRow = undefined;
+  }
 
   public cancelHandler({ sender, rowIndex }: CancelEvent): void {
     this.closeEditor(sender, rowIndex);
@@ -157,25 +160,31 @@ private loadProducts(): void {
   }
 
 // ----------Edit On Row Click------------------->
-  public rowClickHandler(event: any): void {
-    const targetRow = event.target.closest('tr');
-    if (!targetRow) return;
-    
-    const rowElements = Array.from(this.grid.wrapper.nativeElement.querySelectorAll('tbody tr'));
-    const rowIndex = rowElements.indexOf(targetRow);
-    
-    const data = this.grid.data as any[] | null;
-    const dataItem = data ? data[rowIndex] : null;
-    
-    if (dataItem) {
-      this.editHandler({
-        sender: this.grid,
-        rowIndex,
-        dataItem,
-        isNew: false
-      });
-    }
+public rowClickHandler(event: any): void {
+  // Save previous edit if exists
+  this.saveCurrentEdit();
+
+  const targetRow = event.target.closest('tr');
+  if (!targetRow) return;
+  
+  // Ignore if clicking command buttons
+  if (event.target.closest('.k-grid-commands')) return;
+  
+  const rowElements = Array.from(this.grid.wrapper.nativeElement.querySelectorAll('tbody tr'));
+  const rowIndex = rowElements.indexOf(targetRow);
+  
+  const data = this.grid.data as any[] | null;
+  const dataItem = data ? data[rowIndex] : null;
+  
+  if (dataItem) {
+    this.editHandler({
+      sender: this.grid,
+      rowIndex,
+      dataItem,
+      isNew: false
+    });
   }
+}
 
   public onGridBlur(event: any): void {
     if (this.currentlyEditedRow !== undefined && this.formGroup) {
@@ -222,7 +231,30 @@ private loadProducts(): void {
     }
   }
 
-  
+  @HostListener('document:click', ['$event'])
+  handleDocumentClick(event: MouseEvent) {
+    if (!this.grid?.wrapper.nativeElement.contains(event.target)) {
+      this.saveCurrentEdit();
+    }
+  }
+
+  private saveCurrentEdit(): void {
+    if (this.formGroup?.dirty && this.editedRowIndex !== undefined) {
+      const data = this.grid.data as Product[] | null;
+      const dataItem = data?.[this.editedRowIndex];
+      
+      if (dataItem) {
+        this.saveHandler({
+          sender: this.grid,
+          rowIndex: this.editedRowIndex,
+          formGroup: this.formGroup,
+          isNew: false,
+          dataItem
+        });
+      }
+    }
+  }
+
  
   // -----------Excel-Sort-Toogle----------------->
   exportExcel(): void {
