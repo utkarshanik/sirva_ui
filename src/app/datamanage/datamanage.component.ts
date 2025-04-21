@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { KENDO_GRID, DataBindingDirective, GridComponent, EditEvent, AddEvent, CancelEvent, SaveEvent, RemoveEvent, GridModule, ColumnMenuSettings } from '@progress/kendo-angular-grid';
+import { KENDO_GRID, DataBindingDirective, GridComponent, EditEvent, AddEvent, CancelEvent, SaveEvent, RemoveEvent, GridModule, ColumnMenuSettings, CellClickEvent } from '@progress/kendo-angular-grid';
 import { KENDO_CHARTS } from '@progress/kendo-angular-charts';
 import { KENDO_CHECKBOX, KENDO_INPUTS } from '@progress/kendo-angular-inputs';
 import { KENDO_GRID_PDF_EXPORT, KENDO_GRID_EXCEL_EXPORT } from '@progress/kendo-angular-grid';
@@ -14,7 +14,7 @@ import { Product } from '../products';
 import { DataservieService } from '../services/dataservie.service';
 import {FormControl, FormGroup, ReactiveFormsModule,Validators,} from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
-import { AreaData,Area,listItems,listItems2,areaData  } from './dropdown_data';
+import { listItems,listItems2,areaData  } from './dropdown_data';
 
 
 @Component({
@@ -222,6 +222,8 @@ private loadProducts(): void {
     }
   }
 
+  
+ 
   // -----------Excel-Sort-Toogle----------------->
   exportExcel(): void {
     if (this.grid) {

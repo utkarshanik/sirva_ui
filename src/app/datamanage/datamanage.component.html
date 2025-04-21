@@ -38,6 +38,7 @@
   [reorderable]="true"
   [resizable]="true"
   [columnMenu]="true"
+  (sortChange)="onSortChange($event)"
   (edit)="editHandler($event)"
   (cancel)="cancelHandler($event)"
   (save)="saveHandler($event)"
@@ -47,12 +48,11 @@
   (blur)="onGridBlur($event)"
   (cellClose)="onCellClose($event)"
   [navigable]="true"
-  (cellBlur)="onCellBlur($event)"
-  (sortChange)="onSortChange($event)">
+  (cellBlur)="onCellBlur($event)">
 
       <ng-template kendoGridToolbarTemplate class="p-0">
         <div class="col-12 d-flex justify-content-between align-items-center">
-          <div class="col- d-flex justify-content-space-between align-items-center">
+          <div class="col- d-flex justify-content-space-between align-items-center mb-3">
       
             <div>
               <kendo-dropdownlist [style.width.px]="200" [data]="listItems" value="All Leads">
@@ -70,7 +70,7 @@
             </div>
           </div>
 
-          <div class="col-6 d-flex justify-content-end justify-content-space-evenly g-2">
+          <div class="col-6 d-flex justify-content-end justify-content-space-evenly g-2 mb-3">
 
               <div class="  rounded-5 p-1 px-2 d-flex align-items-center justify-content-between w-25  bluebt2">
                 <button kendoButton  (click)="selectButton('non-intl')"  [ngClass]="['rounded-5', 'w-75', 'h-75', 'mx-2', selected === 'non-intl' ? 'active-btn' : 'inactive-btn']"  title="Browse" >Non-Intl.</button>
