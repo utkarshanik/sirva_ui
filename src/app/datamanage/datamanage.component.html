@@ -4,7 +4,6 @@
   </div>
 
   <div class=" d-flex justify-content-end align-items-center col-6">
-
     <div>
         <input type="checkbox" id="checkbox2" kendoCheckBox />
         <label class="k-checkbox-label" for="checkbox2">Board View</label>
@@ -17,20 +16,23 @@
     </div>
 
     <div>
-      <button kendoButton (click)="onButtonClick()" title="Browse" class="greenbt">Create</button>
+      <button kendoButton
+      (click)="addHandler({sender: grid})"
+      class="greenbt  text-center"
+      title="Add New Record">
+      <kendo-svgicon [icon]="plusIcon" class="text-center mb-1 me-0" > </kendo-svgicon>
+      Create
+      </button>
     </div>
-
   </div>
-
 </div>
-
 
 <div class="grid ">
   <kendo-grid
   #myGrid
   [data]="gridData"
   [height]="500"
-  [pageable]="true"
+  [pageable]="false"
   [sortable]="true"
   [groupable]="false"
   [reorderable]="true"
@@ -50,50 +52,42 @@
 
       <ng-template kendoGridToolbarTemplate class="p-0">
         <div class="col-12 d-flex justify-content-between align-items-center">
-        <div class="col- d-flex justify-content-space-between align-items-center">
-    
-          <div>
-            <kendo-dropdownlist [style.width.px]="200" [data]="listItems" value="All Leads">
-            </kendo-dropdownlist> 
-          </div>
-          <div class="mx-3">
-              <kendo-dropdownlist [style.width.px]="200" [data]="listItems2" value="Select Saved Preference">
+          <div class="col- d-flex justify-content-space-between align-items-center">
+      
+            <div>
+              <kendo-dropdownlist [style.width.px]="200" [data]="listItems" value="All Leads">
               </kendo-dropdownlist> 
-          </div>
-          <kendo-textbox #searchBox [style.width.px]="200" placeholder="Type Search Keyword" (valueChange)="onFilter($event)"></kendo-textbox>
-          <kendo-grid-spacer></kendo-grid-spacer>
-          <div class="greenbt p-2 rounded-3 ms-2" (click)="onFilter(searchBox.value)">
-            <img src="assets/icons8-search-25.png" alt="Search Icon">
-          </div>
-
-        </div>
-
-        <div class="col-6 d-flex justify-content-end justify-content-space-evenly g-2">
-
-             <div class="  rounded-5 p-1 px-2 d-flex align-items-center justify-content-between w-25  bluebt2">
-
-              <button kendoButton  (click)="selectButton('non-intl')"  [ngClass]="['rounded-5', 'w-75', 'h-75', 'mx-2', selected === 'non-intl' ? 'active-btn' : 'inactive-btn']"  title="Browse" >Non-Intl.</button>
-              
-              <button kendoButton (click)="selectButton('intl')"  [ngClass]="['rounded-5', 'w-75', 'h-75', 'mx-2', selected === 'intl' ? 'active-btn' : 'inactive-btn']" 
-              title="Browse"> Intl.</button>  
             </div>
+            <div class="mx-3">
+                <kendo-dropdownlist [style.width.px]="200" [data]="listItems2" value="Select Saved Preference">
+                </kendo-dropdownlist> 
+            </div>
+            <kendo-textbox #searchBox [style.width.px]="200" placeholder="Type Search Keyword" (valueChange)="onFilter($event)"></kendo-textbox>
+      
+            <kendo-grid-spacer></kendo-grid-spacer>
+            <div class="greenbt p-1 rounded-3 ms-2" (click)="onFilter(searchBox.value)">
+              <img src="assets/icons8-search-25.png" alt="Search Icon">
+            </div>
+          </div>
 
-          <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Clear Filters</button>
-          <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2"> Bulk Edit</button>
-          <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Save Preference</button>
+          <div class="col-6 d-flex justify-content-end justify-content-space-evenly g-2">
 
-            <button  kendoButton  fillMode="flat"  class="bbs" >
-              <kendo-svgicon [icon]="menuIcon" ></kendo-svgicon>
-            </button>
+              <div class="  rounded-5 p-1 px-2 d-flex align-items-center justify-content-between w-25  bluebt2">
+                <button kendoButton  (click)="selectButton('non-intl')"  [ngClass]="['rounded-5', 'w-75', 'h-75', 'mx-2', selected === 'non-intl' ? 'active-btn' : 'inactive-btn']"  title="Browse" >Non-Intl.</button>
+                
+                <button kendoButton (click)="selectButton('intl')"  [ngClass]="['rounded-5', 'w-75', 'h-75', 'mx-2', selected === 'intl' ? 'active-btn' : 'inactive-btn']" 
+                title="Browse"> Intl.</button>  
+              </div>
+
+                <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Clear Filters</button>
+                <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2"> Bulk Edit</button>
+                <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Save Preference</button>
+
+                <button  kendoButton  fillMode="flat"  class="bbs" >
+                  <kendo-svgicon [icon]="menuIcon" ></kendo-svgicon>
+                </button>
+          </div>
         </div>
-      </div>
-        <button kendoButton
-        (click)="addHandler({sender: grid})"
-        class="greenbt mb-2 text-center"
-        title="Add New Record">
-        <kendo-svgicon [icon]="plusIcon" class="text-center mb-1 me-0" > </kendo-svgicon>
-        Add 
-      </button>
       </ng-template>
       
       <kendo-grid-checkbox-column [width]="45" [headerClass]="{ 'text-center': true }" [class]="{ 'text-center': true }" [resizable]="false"
@@ -114,7 +108,7 @@
         </ng-template>
       </kendo-grid-column> 
 
-      <kendo-grid-command-column [width]="180" [sticky]="true"   [columnMenu]="false">
+      <kendo-grid-command-column [width]="180" [sticky]="true" [columnMenu]="false">
         <ng-template kendoGridCellTemplate let-isNew="isNew">
           <button kendoGridEditCommand [primary]="true">Edit</button>
           <button kendoGridRemoveCommand>Remove</button>
@@ -152,8 +146,32 @@
 
       <kendo-grid-column field="ReorderLevel" title="Booking Agency" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
       </kendo-grid-column> 
+      <kendo-grid-column field="ProductID" title="Record Id" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
+      </kendo-grid-column>
 
-      <!-- <kendo-grid-pdf fileName="Employees.pdf" [repeatHeaders]="true"></kendo-grid-pdf> -->
+      <kendo-grid-column field="ProductName" title="Last Name" [width]="150" [class]="{ 'text-center': true }" [resizable]="false" 
+        [columnMenu]="true" [sortable]="true" [filterable]="true">
+      </kendo-grid-column>
+
+      <kendo-grid-column field="QuantityPerUnit" title="First Name" [width]="150" [class]="{ 'text-center': true }" [resizable]="false"
+        [columnMenu]="true" [sortable]="true" [filterable]="true">
+      </kendo-grid-column>
+
+      <kendo-grid-column field="UnitPrice" title="Primary Email Address" [width]="190" [columnMenu]="true" [sortable]="true" [filterable]="true">
+      </kendo-grid-column>
+
+      <kendo-grid-column field="SupplierID" title="Primary Phone Type" [width]="190" [columnMenu]="true" [sortable]="true" [filterable]="true">
+      </kendo-grid-column>
+
+      <kendo-grid-column field="UnitsInStock" title="LMP Lead Id" [width]="130" filter="numeric" [columnMenu]="true" [sortable]="true" [filterable]="true">
+      </kendo-grid-column>
+
+      <kendo-grid-column field="UnitsOnOrder" title="Appoitment Type" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
+      </kendo-grid-column>
+
+      <kendo-grid-column field="ReorderLevel" title="Booking Agency" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
+      </kendo-grid-column> 
+
       <kendo-grid-excel fileName="data.xlsx"></kendo-grid-excel>
 
     </kendo-grid>

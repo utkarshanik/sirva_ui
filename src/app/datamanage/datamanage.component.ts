@@ -12,13 +12,10 @@ import { menuIcon } from '@progress/kendo-svg-icons'
 import { IconsModule } from '@progress/kendo-angular-icons';
 import { Product } from '../products';
 import { DataservieService } from '../services/dataservie.service';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule,Validators,} from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
+import { AreaData,Area,listItems,listItems2,areaData  } from './dropdown_data';
+
 
 @Component({
   selector: 'app-datamanage',
@@ -26,13 +23,21 @@ import { HttpClientModule } from '@angular/common/http';
     KENDO_CHARTS,
     KENDO_INPUTS,
     KENDO_GRID_PDF_EXPORT,
-    KENDO_GRID_EXCEL_EXPORT,KENDO_BUTTONS,KENDO_DROPDOWNLIST,IconsModule,DropDownTreeComponent,KENDO_DROPDOWNTREE,KENDO_CHECKBOX,],
+    KENDO_GRID_EXCEL_EXPORT,KENDO_BUTTONS,KENDO_DROPDOWNLIST,
+    IconsModule,DropDownTreeComponent,
+    KENDO_DROPDOWNTREE,KENDO_CHECKBOX,],
     providers: [DataservieService],
   templateUrl: './datamanage.component.html',
   styleUrls: ['./datamanage.component.css'],
 })
 
 export class DatamanageComponent implements OnInit {
+  @ViewChild(DataBindingDirective) dataBinding!: DataBindingDirective;
+  @ViewChild('myGrid') grid!: GridComponent;
+
+ public listItems = listItems;
+ public listItems2 = listItems2;
+ public areaData = areaData;
  public gridData: Product[] = [];
  public menuIcon = menuIcon;
  public plusIcon= plusIcon;
@@ -43,33 +48,22 @@ export class DatamanageComponent implements OnInit {
  public formGroup: FormGroup | undefined;
  private editedRowIndex: number | undefined = undefined;
  private currentlyEditedRow: number | undefined;
+private originalGridData: Product[] = [];
 
-  // Add column menu settings
-  public columnMenuSettings: ColumnMenuSettings = {
-    filter: true,
-    columnChooser: true
-  };
+constructor(private service: DataservieService) {}
 
-  // Add sort settings
-  public sort: Array<any> = [
-    {
-      field: 'ProductID',
-      dir: 'asc'
-    }
-  ];
+// Add column menu settings
+public ngOnInit(): void {
+  this.loadProducts();
+}
 
-  constructor(private service: DataservieService) {}
+private loadProducts(): void {
+  this.service.products().subscribe((data) => {
+    this.gridData = data;
+    this.originalGridData = [...data]; 
+  });
+}
 
-  public ngOnInit(): void {
-    this.loadProducts();
-  }
-
-  private loadProducts(): void {
-    this.service.products().subscribe((data) => {
-      this.gridData = data;
-    });
-  }
-  
   public addHandler(args: AddEvent | { sender: any }): void {
     const sender = args.sender || this.grid;
     this.closeEditor(sender);
@@ -118,16 +112,6 @@ export class DatamanageComponent implements OnInit {
       );
     }
   }
-  
-  public removeHandler({ dataItem }: RemoveEvent): void {
-    this.service.removeProduct(dataItem).subscribe(() => this.loadProducts());
-  }
-
-  private closeEditor(grid: GridComponent, rowIndex = this.editedRowIndex): void {
-    grid.closeRow(rowIndex);
-    this.editedRowIndex = undefined;
-    this.formGroup = undefined;
-  }
 
   public editHandler({ sender, rowIndex, dataItem }: EditEvent): void {
     this.closeEditor(sender);
@@ -137,124 +121,42 @@ export class DatamanageComponent implements OnInit {
     sender.editRow(rowIndex, this.formGroup);
   }
 
+  public removeHandler({ dataItem }: RemoveEvent): void {
+    this.service.removeProduct(dataItem).subscribe(() => this.loadProducts());
+  }
+
+  private closeEditor(grid: GridComponent, rowIndex = this.editedRowIndex): void {
+      grid.closeRow(rowIndex);
+      this.editedRowIndex = undefined;
+      this.formGroup = undefined;
+    }
+
   public cancelHandler({ sender, rowIndex }: CancelEvent): void {
     this.closeEditor(sender, rowIndex);
   }
  
-  @ViewChild(DataBindingDirective) dataBinding!: DataBindingDirective;
-  @ViewChild('myGrid') grid!: GridComponent;
-
   public onFilter(value: string): void {
-    const inputValue = value;
-    console.log(inputValue);
-    this.gridData = process(this.gridData, {
-      filter: {
-        logic: "or",
-        filters: [
-          {
-            field: "ProductID",
-            operator: "contains",
-            value: inputValue,
-          },
-          {
-            field: "ProductName",
-            operator: "contains",
-            value: inputValue,
-          },
-        ],
-      },
-    }).data;
-
-    this.dataBinding.skip = 0;
-  }
-
-  exportExcel(): void {
-    if (this.grid) {
-      this.grid.saveAsExcel();
-    } else {
-      console.warn("Grid reference is undefined.");
+    if (!value) {
+      // Reset to original data if search is empty
+      this.gridData = [...this.originalGridData];
+      return;
+    }
+  
+    const inputValue = value.toLowerCase();
+    this.gridData = this.originalGridData.filter(item => {
+      return Object.keys(item).some(prop => {
+        const value = item[prop]?.toString().toLowerCase();
+        return value?.includes(inputValue);
+      });
+    });
+  
+    // Only set skip if dataBinding exists
+    if (this.dataBinding) {
+      this.dataBinding.skip = 0;
     }
   }
 
-  onButtonClick() {
-    console.log("Button clicked!");
-  }
-
-  selected: string = 'non-intl';
-  selectButton(type: string) {
-    this.selected = type;
-  }
-
-  public listItems: Array<string> = [
-    "lead 1",
-    "lead 2",
-    "lead 3"
-  ];
-  public listItems2: Array<string> = [
-    "Pref 1",
-    "Pref 2",
-    "Pref 3"
-  ];
-
-  public areaData: AreaData[] = [
-    {
-      text: "View Lead",
-      id: 1,
-      areas: [
-        { text: "Chicago", id: 4 },
-        { text: "Los Angeles", id: 3 },
-        { text: "New York", id: 2 },
-        { text: "San Francisco", id: 5 },
-      ],
-    },
-    {
-      text: "Edit Lead",
-      id: 6,
-      areas: [
-        { text: "Amsterdam", id: 7 },
-        { text: "Barcelona", id: 10 },
-        { text: "London", id: 8 },
-        { text: "Paris", id: 9 },
-      ],
-    },
-    {
-      text: "Assigned to Sales Rep",
-      id: 6,
-      areas: [
-        { text: "Amsterdam", id: 7 },
-        { text: "Barcelona", id: 10 },
-        { text: "London", id: 8 },
-        { text: "Paris", id: 9 },
-      ],
-    },
-    {
-      text: "Schedule Appoitment",
-      id: 6,
-      areas: [
-        { text: "Amsterdam", id: 7 },
-        { text: "Barcelona", id: 10 },
-        { text: "London", id: 8 },
-        { text: "Paris", id: 9 },
-      ],
-    },
-    {
-      text: "Possible Matches",
-      id: 6,
-      areas: [
-        { text: "Amsterdam", id: 7 },
-        { text: "Barcelona", id: 10 },
-        { text: "London", id: 8 },
-        { text: "Paris", id: 9 },
-      ],
-    },
-  ];
-  public dropdownSort: SortDescriptor[] = [];
-
-public onSortChange(sort: SortDescriptor[]): void {
-  this.dropdownSort = sort;
-  this.gridData = process(this.gridData, { sort }).data;
-}
-
+// ----------Edit On Row Click------------------->
   public rowClickHandler(event: any): void {
     const targetRow = event.target.closest('tr');
     if (!targetRow) return;
@@ -319,6 +221,43 @@ public onSortChange(sort: SortDescriptor[]): void {
       });
     }
   }
+
+  // -----------Excel-Sort-Toogle----------------->
+  exportExcel(): void {
+    if (this.grid) {
+      this.grid.saveAsExcel();
+    } else {
+      console.warn("Grid reference is undefined.");
+    }
+  }
+
+  onButtonClick() {
+    console.log("Button clicked!");
+  }
+
+  selected: string = 'non-intl';
+  selectButton(type: string) {
+    this.selected = type;
+  }
+
+  public dropdownSort: SortDescriptor[] = [];
+  public onSortChange(sort: SortDescriptor[]): void {
+  this.dropdownSort = sort;
+  this.gridData = process(this.gridData, { sort }).data;
+  }
+
+  public columnMenuSettings: ColumnMenuSettings = {
+    filter: true,
+    columnChooser: true
+  };
+
+  // Add sort settings
+  // public sort: Array<any> = [
+  //   {
+  //     field: 'ProductID',
+  //     dir: 'asc'
+  //   }
+  // ];
 }
 
 const createFormGroup = (dataItem: Partial<Product>) =>
@@ -339,13 +278,4 @@ const createFormGroup = (dataItem: Partial<Product>) =>
     Discontinued: new FormControl(dataItem.Discontinued),
   });
 
-type AreaData = {
-  text: string;
-  id: number;
-  areas: Area[];
-};
 
-type Area = {
-  text: string;
-  id: number;
-};

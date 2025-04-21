@@ -6,7 +6,7 @@
       "UnitPrice": "sdads@gmail.com",
       "UnitsInStock": 53,
       "CategoryID": 2,
-      "ProductID": "575",
+      "ProductID": "5",
       "SupplierID": 2,
       "QuantityPerUnit": "48 - 6 oz jars",
       "UnitsOnOrder": 0,
@@ -19,7 +19,7 @@
       "UnitPrice": "sdads@gmail.com",
       "UnitsInStock": 53,
       "CategoryID": 2,
-      "ProductID": "7",
+      "ProductID": "75",
       "SupplierID": 2,
       "QuantityPerUnit": "48 - 6 oz jars",
       "UnitsOnOrder": 0,
@@ -166,6 +166,19 @@
       "SupplierID": "gj",
       "QuantityPerUnit": "0k",
       "UnitsOnOrder": "0kkh",
+      "ReorderLevel": "0",
+      "Discontinued": null
+    },
+    {
+      "id": null,
+      "ProductID": "bv",
+      "ProductName": "cvb",
+      "UnitPrice": "bcv",
+      "UnitsInStock": "56",
+      "CategoryID": 0,
+      "SupplierID": "vb",
+      "QuantityPerUnit": "cb",
+      "UnitsOnOrder": "56",
       "ReorderLevel": "0",
       "Discontinued": null
     }

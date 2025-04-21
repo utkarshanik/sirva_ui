@@ -53,7 +53,6 @@
   font-weight: 600;
 }
 
-
 /* Toogle button */
 .active-btn {
   background-color: #88bb44; /* or your preferred active color */
@@ -67,27 +66,6 @@
   color: #fff; /* match with active border color */
   /* border: 1px solid #007BFF; */
 }
-
-/* Column menu hover styles */
-/* ::ng-deep .k-grid-header .k-grid-filter:hover,
-::ng-deep .k-grid-header .k-header-column-menu:hover,
-::ng-deep .k-grid-header .k-grid-header-menu:hover,
-::ng-deep .k-grid-header .k-hierarchy-cell .k-icon:hover,
-::ng-deep .k-grid .k-grid-header .k-header .k-grid-column-menu:hover,
-::ng-deep .k-grid .k-grid-header .k-table-th .k-grid-column-menu:hover {
-    background-color: #0e0d0d !important;
-    color: #ffffff !important;
-} */
-
-/* ::ng-deep .k-grid .k-grid-header .k-grid-column-menu {
-    padding: 4px;
-    border-radius: 2px;
-    transition: background-color 0.2s ease;
-    width: 28px;
-    height: 28px;
-    margin: -4px;
-    box-sizing: content-box;
-} */
 
 .k-button.greenbt {
   display: flex;

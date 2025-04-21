@@ -10,6 +10,7 @@ export interface Product {
   UnitsOnOrder: number;
   ReorderLevel: string;
   Discontinued: boolean;
+  [key: string]: string | number | boolean | undefined;
 }
 
 //   {
