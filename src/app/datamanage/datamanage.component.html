@@ -48,7 +48,15 @@
   (blur)="onGridBlur($event)"
   (cellClose)="onCellClose($event)"
   [navigable]="true"
-  (cellBlur)="onCellBlur($event)">
+  (cellBlur)="onCellBlur($event)"
+  [pageSize]="gridSettings.state.take"
+  [skip]="gridSettings.state.skip"
+  [sortable]="true"
+  [sort]="gridSettings.state.sort"
+  [filterable]="false"
+  [filter]="gridSettings.state.filter"
+  [group]="gridSettings.state.group"
+  (dataStateChange)="dataStateChange($event)">
 
       <ng-template kendoGridToolbarTemplate class="p-0">
         <div class="col-12 d-flex justify-content-between align-items-center">
@@ -81,13 +89,21 @@
 
                 <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Clear Filters</button>
                 <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2"> Bulk Edit</button>
-                <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Save Preference</button>
-
+                <button  kendoButton (click)="saveGridSettings(grid)" title="Browse" class="greenbt mx-2">Save Preference</button>
+                
                 <button  kendoButton  fillMode="flat"  class="bbs" >
                   <kendo-svgicon [icon]="menuIcon" ></kendo-svgicon>
                 </button>
+                <button
+                  kendoButton
+                  *ngIf="savedStateExists"
+                  (click)="loadSavedState()"
+                  class="greenbt mx-2">
+                  Load saved state
+                </button>
           </div>
         </div>
+        
       </ng-template>
       
       <kendo-grid-checkbox-column [width]="45" [headerClass]="{ 'text-center': true }" [class]="{ 'text-center': true }" [resizable]="false"
@@ -171,31 +187,8 @@
 
       <kendo-grid-column field="ReorderLevel" title="Booking Agency" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
       </kendo-grid-column> 
-      <kendo-grid-column field="ProductID" title="Record Id" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
-      </kendo-grid-column>
 
-      <kendo-grid-column field="ProductName" title="Last Name" [width]="150" [class]="{ 'text-center': true }" [resizable]="false" 
-        [columnMenu]="true" [sortable]="true" [filterable]="true">
-      </kendo-grid-column>
 
-      <kendo-grid-column field="QuantityPerUnit" title="First Name" [width]="150" [class]="{ 'text-center': true }" [resizable]="false"
-        [columnMenu]="true" [sortable]="true" [filterable]="true">
-      </kendo-grid-column>
-
-      <kendo-grid-column field="UnitPrice" title="Primary Email Address" [width]="190" [columnMenu]="true" [sortable]="true" [filterable]="true">
-      </kendo-grid-column>
-
-      <kendo-grid-column field="SupplierID" title="Primary Phone Type" [width]="190" [columnMenu]="true" [sortable]="true" [filterable]="true">
-      </kendo-grid-column>
-
-      <kendo-grid-column field="UnitsInStock" title="LMP Lead Id" [width]="130" filter="numeric" [columnMenu]="true" [sortable]="true" [filterable]="true">
-      </kendo-grid-column>
-
-      <kendo-grid-column field="UnitsOnOrder" title="Appoitment Type" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
-      </kendo-grid-column>
-
-      <kendo-grid-column field="ReorderLevel" title="Booking Agency" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
-      </kendo-grid-column> 
 
       <kendo-grid-excel fileName="data.xlsx"></kendo-grid-excel>
 

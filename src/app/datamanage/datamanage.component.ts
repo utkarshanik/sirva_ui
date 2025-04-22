@@ -4,7 +4,7 @@ import { KENDO_GRID, DataBindingDirective, GridComponent, EditEvent, AddEvent, C
 import { KENDO_CHARTS } from '@progress/kendo-angular-charts';
 import { KENDO_CHECKBOX, KENDO_INPUTS } from '@progress/kendo-angular-inputs';
 import { KENDO_GRID_PDF_EXPORT, KENDO_GRID_EXCEL_EXPORT } from '@progress/kendo-angular-grid';
-import { process, SortDescriptor } from '@progress/kendo-data-query';
+import { process,State, SortDescriptor } from '@progress/kendo-data-query';
 import { filePdfIcon, fileExcelIcon, SVGIcon, plusIcon,menuIcon} from '@progress/kendo-svg-icons';
 import { KENDO_BUTTONS, KENDO_DROPDOWNBUTTON } from '@progress/kendo-angular-buttons';
 import { DropDownTreeComponent, KENDO_DROPDOWNLIST, KENDO_DROPDOWNTREE } from '@progress/kendo-angular-dropdowns';
@@ -15,6 +15,9 @@ import {FormControl, FormGroup, ReactiveFormsModule,Validators,} from "@angular/
 import { HttpClientModule } from '@angular/common/http';
 import { listItems,listItems2,areaData  } from './dropdown_data';
 import{categories} from './category';
+import { GridSettings } from './gridPref/grid-settings.interface';
+import { StatePersistingService } from './gridPref/service/state-persisting.service';
+import{ColumnSettings} from './gridPref/column-settings.interface';
 
 @Component({
   selector: 'app-datamanage',
@@ -50,20 +53,15 @@ export class DatamanageComponent implements OnInit {
  public menuIcon = menuIcon;
  public plusIcon= plusIcon;
 
-constructor(private service: DataservieService) {}
-
-// Add column menu settings Drop down lead id
-public category(id: number): Category {
-  const category = this.categories.find((x) => x.CategoryID === id);
-  if (!category) {
-    throw new Error(`Category with ID ${id} not found`);
+constructor(private service: DataservieService,public persistingService: StatePersistingService) {
+  const persistedSettings = this.persistingService.get("gridSettings") as GridSettings;
+  if (persistedSettings && 'state' in persistedSettings && 'columnsConfig' in persistedSettings) {
+    this.gridSettings = this.mapGridSettings(persistedSettings);
   }
-  return category;
 }
-public getCategoryName(categoryId: number): string {
-  const category = this.categories.find(c => c.CategoryID === categoryId);
-  return category?.CategoryName || '';
-}
+
+
+
 
 public ngOnInit(): void {
   this.loadProducts();
@@ -73,6 +71,7 @@ private loadProducts(): void {
   this.service.products().subscribe((data) => {
     this.gridData = data;
     this.originalGridData = [...data]; 
+    // console.log('Loaded products:', this.gridData);
   });
 }
 
@@ -172,6 +171,12 @@ private loadProducts(): void {
   }
 
 // ----------Edit On Row Click------------------->
+@HostListener('document:click', ['$event'])
+handleDocumentClick(event: MouseEvent) {
+  if (!this.grid?.wrapper.nativeElement.contains(event.target)) {
+    this.saveCurrentEdit();
+  }
+}
 public rowClickHandler(event: any): void {
   // Save previous edit if exists
   this.saveCurrentEdit();
@@ -243,13 +248,6 @@ public rowClickHandler(event: any): void {
     }
   }
 
-  @HostListener('document:click', ['$event'])
-  handleDocumentClick(event: MouseEvent) {
-    if (!this.grid?.wrapper.nativeElement.contains(event.target)) {
-      this.saveCurrentEdit();
-    }
-  }
-
   private saveCurrentEdit(): void {
     if (this.formGroup?.dirty && this.editedRowIndex !== undefined) {
       const data = this.grid.data as Product[] | null;
@@ -266,6 +264,19 @@ public rowClickHandler(event: any): void {
       }
     }
   }
+
+  // Add column menu and settings Drop down lead id
+public category(id: number): Category {
+  const category = this.categories.find((x) => x.CategoryID === id);
+  if (!category) {
+    throw new Error(`Category with ID ${id} not found`);
+  }
+  return category;
+}
+public getCategoryName(categoryId: number): string {
+  const category = this.categories.find(c => c.CategoryID === categoryId);
+  return category?.CategoryName || '';
+}
 
   // -----------Excel-Sort-Toogle----------------->
   exportExcel(): void {
@@ -296,13 +307,301 @@ public rowClickHandler(event: any): void {
     columnChooser: true
   };
 
-  // Add sort settings
-  // public sort: Array<any> = [
-  //   {
-  //     field: 'ProductID',
-  //     dir: 'asc'
-  //   }
-  // ];
+  // ---------------------Save Prefrence-------------------->
+  public gridSettings: GridSettings = {
+    state: {
+      skip: 0,
+      take: 5,
+
+      // Initial filter descriptor
+      filter: {
+        logic: "and",
+        filters: [],
+      },
+      group: [],
+    },
+    gridData: process(this.gridData, {
+      skip: 0, 
+      take: 5,
+      // Initial filter descriptor
+      filter: {
+        logic: "and",
+        filters: [],
+      },
+      group: [],
+    }),
+    columnsConfig: [
+      {
+        field: "ProductID",
+        title: "ID",
+        filterable: false,
+        filter: "numeric",
+        width: 60,
+        hidden: false,
+      },
+      {
+        field: "ProductName",
+        title: "Product Name",
+        filterable: true,
+        filter: "text",
+        width: 300,
+        hidden: false,
+      },
+      {
+        field: "SupplierID",
+        title: "Supplier",
+        filterable: true,
+        filter: "numeric",
+        width: 200,
+        hidden: false,
+      },
+      {
+        field: "CategoryID",
+        title: "Category",
+        filterable: true,
+        filter: "numeric",
+        width: 200,
+        hidden: false,
+      },
+      {
+        field: "QuantityPerUnit",
+        title: "Quantity Per Unit",
+        filterable: true,
+        filter: "text",
+        width: 200,
+        hidden: false,
+      },
+      {
+        field: "UnitPrice",
+        title: "Units Price",
+        filterable: true,
+        filter: "text",
+        width: 180,
+        hidden: false,
+      },
+      {
+        field: "UnitsInStock",
+        title: "Units In Stock",
+        filterable: true,
+        filter: "numeric",
+        width: 180,
+        hidden: false,
+      },
+      {
+        field: "UnitsOnOrder",
+        title: "Units On Order",
+        filterable: true,
+        filter: "numeric",
+        width: 180,
+        hidden: false,
+      },
+      {
+        field: "ReorderLevel",
+        title: "Reorder Level",
+        filterable: true,
+        filter: "text",
+        width: 180,
+        hidden: false,
+      },
+    ],
+  };
+
+  private isValidGridSettings(settings: any): settings is GridSettings {
+    return settings 
+      && 'state' in settings 
+      && 'columnsConfig' in settings 
+      && Array.isArray(settings.columnsConfig);
+  }
+  public loadSavedState(): void {
+    try {
+      const savedSettings = this.persistingService.get('gridSettings') as GridSettings;
+      
+      if (savedSettings && this.isValidGridSettings(savedSettings)) {
+        // Map the saved settings
+        const mappedSettings = this.mapGridSettings(savedSettings);
+        
+        // Update grid settings
+        this.gridSettings = mappedSettings;
+        
+        // Apply state changes
+        if (this.grid) {
+          // Apply sort
+          if (mappedSettings.state.sort) {
+            this.grid.sort = mappedSettings.state.sort;
+          }
+    
+          // Apply filters
+          if (mappedSettings.state.filter) {
+            this.grid.filter = mappedSettings.state.filter;
+          }
+    
+          // Apply pagination
+          if (typeof mappedSettings.state.skip === 'number') {
+            this.grid.skip = mappedSettings.state.skip;
+          }
+          if (typeof mappedSettings.state.take === 'number') {
+            this.grid.pageSize = mappedSettings.state.take;
+          }
+    
+          // Apply column configurations safely
+          if (mappedSettings.columnsConfig && Array.isArray(mappedSettings.columnsConfig)) {
+            this.grid.columns.forEach(column => {
+              if (!column) return; // Skip undefined columns
+              
+              const savedColumn = mappedSettings.columnsConfig.find(c => 
+                c && c.field === (column as any)?.field
+              );
+              
+              if (savedColumn && column) {
+                // Apply only if properties exist
+                if (typeof savedColumn.width === 'number') {
+                  column.width = savedColumn.width;
+                }
+                if (typeof savedColumn.hidden === 'boolean') {
+                  column.hidden = savedColumn.hidden;
+                }
+                if (typeof savedColumn.orderIndex === 'number') {
+                  (column as any).orderIndex = savedColumn.orderIndex;
+                }
+              }
+            });
+    
+            // Safely reorder columns
+            const validColumns = this.grid.columns.filter(col => col && (col as any).field);
+            const sortedColumns = [...validColumns].sort((a: any, b: any) => 
+              ((a?.orderIndex || 0) - (b?.orderIndex || 0))
+            );
+  
+            if (sortedColumns.length > 0) {
+              const validFields = sortedColumns
+                .map(col => (col as any)?.field)
+                .filter(field => field);
+                
+              if (validFields.length > 0) {
+                validFields.forEach((field, index) => {
+                  this.grid.reorderColumn(field, index);
+                });
+              }
+            }
+          }
+    
+          // Process and refresh data
+          if (Array.isArray(this.gridData)) {
+            this.gridData = process(this.gridData, mappedSettings.state).data;
+            this.grid.data = [...this.gridData];
+          }
+        }
+        
+        console.log('Successfully loaded and applied grid settings:', mappedSettings);
+      }
+    } catch (error) {
+      console.error('Error loading saved state:', error);
+      // Optionally reset to default state
+      this.gridSettings = this.getDefaultGridSettings();
+    }
+  }
+  
+  // Add this helper method for default settings
+  private getDefaultGridSettings(): GridSettings {
+    return {
+      state: {
+        skip: 0,
+        take: 5,
+        filter: {
+          logic: "and",
+          filters: [],
+        },
+        group: [],
+      },
+      gridData: process(this.gridData, {
+        skip: 0,
+        take: 5,
+        filter: {
+          logic: "and",
+          filters: [],
+        },
+        group: [],
+      }),
+      columnsConfig: this.gridSettings.columnsConfig
+    };
+  }
+
+
+    public get savedStateExists(): boolean {
+    return !!this.persistingService.get("gridSettings");
+  }
+  public dataStateChange(state: State): void {
+    this.gridSettings.state = state;
+    this.gridSettings.gridData = process(this.gridData, state);
+  }
+
+  public saveGridSettings(grid: GridComponent): void {
+    const columns = grid.columns;
+
+     // Log current grid state
+  console.log('Current Grid State:', {
+    skip: this.gridSettings.state.skip,
+    take: this.gridSettings.state.take,
+    filter: this.gridSettings.state.filter,
+    group: this.gridSettings.state.group
+  });
+
+  // Log column configurations
+  console.log('Current Column Configurations:', 
+    columns.toArray().map(col => ({
+      title: col['title'],
+      width: col['width'],
+      hidden: col['hidden']
+    }))
+  );
+
+    //add only the required column properties to save local storage space
+    const gridConfig = {
+      state: this.gridSettings.state,
+      gridData: this.gridSettings.gridData,
+      columnsConfig: columns.toArray().map((item: any) => {
+        return <ColumnSettings>{
+          field: item["field"],
+          width: item["width"],
+          title: item["title"],
+          filter: item["filter"],
+          format: item["format"],
+          filterable: item["filterable"],
+          orderIndex: item["orderIndex"],
+          hidden: item["hidden"],
+        };
+      }),
+    };
+    console.log('Saving Grid Configuration:', gridConfig);
+    this.persistingService.set("gridSettings", gridConfig);
+    console.log('Grid settings saved to localStorage');
+  }
+
+  public mapGridSettings(gridSettings: GridSettings): GridSettings {
+    const state = gridSettings.state;
+    this.mapDateFilter(state.filter);
+
+    return {
+      state,
+      columnsConfig: gridSettings.columnsConfig.sort(
+        (a: any, b: any) => a.orderIndex - b.orderIndex
+      ),
+      gridData: process(this.gridData, state),
+    };
+  }
+
+  private mapDateFilter = (descriptor: any) => {
+    const filters = descriptor.filters || [];
+
+    filters.forEach((filter: any) => {
+      if (filter.filters) {
+        this.mapDateFilter(filter);
+      } else if (filter.field === "FirstOrderedOn" && filter.value) {
+        filter.value = new Date(filter.value);
+      }
+    });
+  };
+
 }
 
 const createFormGroup = (dataItem: Partial<Product>) =>
