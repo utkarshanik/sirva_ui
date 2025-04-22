@@ -13,6 +13,12 @@ export interface Product {
   [key: string]: string | number | boolean | undefined;
 }
 
+export class Category {
+  public CategoryID?: number;
+  public CategoryName?: string;
+ 
+}
+
 //   {
 //     ProductID: 1,
 //     ProductName: "Chai",

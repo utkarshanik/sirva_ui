@@ -5,17 +5,16 @@ import { KENDO_CHARTS } from '@progress/kendo-angular-charts';
 import { KENDO_CHECKBOX, KENDO_INPUTS } from '@progress/kendo-angular-inputs';
 import { KENDO_GRID_PDF_EXPORT, KENDO_GRID_EXCEL_EXPORT } from '@progress/kendo-angular-grid';
 import { process, SortDescriptor } from '@progress/kendo-data-query';
-import { filePdfIcon, fileExcelIcon, SVGIcon, plusIcon } from '@progress/kendo-svg-icons';
+import { filePdfIcon, fileExcelIcon, SVGIcon, plusIcon,menuIcon} from '@progress/kendo-svg-icons';
 import { KENDO_BUTTONS, KENDO_DROPDOWNBUTTON } from '@progress/kendo-angular-buttons';
 import { DropDownTreeComponent, KENDO_DROPDOWNLIST, KENDO_DROPDOWNTREE } from '@progress/kendo-angular-dropdowns';
-import { menuIcon } from '@progress/kendo-svg-icons'
 import { IconsModule } from '@progress/kendo-angular-icons';
-import { Product } from '../products';
+import { Product,Category } from '../products';
 import { DataservieService } from '../services/dataservie.service';
 import {FormControl, FormGroup, ReactiveFormsModule,Validators,} from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
 import { listItems,listItems2,areaData  } from './dropdown_data';
-
+import{categories} from './category';
 
 @Component({
   selector: 'app-datamanage',
@@ -25,7 +24,7 @@ import { listItems,listItems2,areaData  } from './dropdown_data';
     KENDO_GRID_PDF_EXPORT,
     KENDO_GRID_EXCEL_EXPORT,KENDO_BUTTONS,KENDO_DROPDOWNLIST,
     IconsModule,DropDownTreeComponent,
-    KENDO_DROPDOWNTREE,KENDO_CHECKBOX,],
+    KENDO_DROPDOWNTREE,KENDO_CHECKBOX,ReactiveFormsModule],
     providers: [DataservieService],
   templateUrl: './datamanage.component.html',
   styleUrls: ['./datamanage.component.css'],
@@ -39,20 +38,33 @@ export class DatamanageComponent implements OnInit {
  public listItems2 = listItems2;
  public areaData = areaData;
  public gridData: Product[] = [];
- public menuIcon = menuIcon;
- public plusIcon= plusIcon;
  public mySelection: string[] = [];
  public pdfSVG: SVGIcon = filePdfIcon;
  public excelSVG: SVGIcon = fileExcelIcon;
  public gridData2: Product[] = [];
+ public categories: Category[] = categories;
  public formGroup: FormGroup | undefined;
  private editedRowIndex: number | undefined = undefined;
  private currentlyEditedRow: number | undefined;
-private originalGridData: Product[] = [];
+ private originalGridData: Product[] = [];
+ public menuIcon = menuIcon;
+ public plusIcon= plusIcon;
 
 constructor(private service: DataservieService) {}
 
-// Add column menu settings
+// Add column menu settings Drop down lead id
+public category(id: number): Category {
+  const category = this.categories.find((x) => x.CategoryID === id);
+  if (!category) {
+    throw new Error(`Category with ID ${id} not found`);
+  }
+  return category;
+}
+public getCategoryName(categoryId: number): string {
+  const category = this.categories.find(c => c.CategoryID === categoryId);
+  return category?.CategoryName || '';
+}
+
 public ngOnInit(): void {
   this.loadProducts();
 }
@@ -255,7 +267,6 @@ public rowClickHandler(event: any): void {
     }
   }
 
- 
   // -----------Excel-Sort-Toogle----------------->
   exportExcel(): void {
     if (this.grid) {

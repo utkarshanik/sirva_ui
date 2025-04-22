@@ -138,7 +138,32 @@
       <kendo-grid-column field="SupplierID" title="Primary Phone Type" [width]="190" [columnMenu]="true" [sortable]="true" [filterable]="true">
       </kendo-grid-column>
 
-      <kendo-grid-column field="UnitsInStock" title="LMP Lead Id" [width]="130" filter="numeric" [columnMenu]="true" [sortable]="true" [filterable]="true">
+      <kendo-grid-column field="CategoryID" title="LMP Lead Id" [width]="130" filter="numeric" [columnMenu]="true" [sortable]="true" [filterable]="true">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ getCategoryName(dataItem.CategoryID) }}
+        </ng-template>
+        <ng-template
+        kendoGridEditTemplate
+        let-dataItem="dataItem"
+        let-formGroup="formGroup"
+      >
+        <kendo-dropdownlist
+          [defaultItem]="{
+            CategoryID: null,
+            CategoryName: 'Select'
+          }"
+          [data]="categories"
+          textField="CategoryName"
+          valueField="CategoryID"
+          [valuePrimitive]="true"
+          [formControl]="formGroup.get('CategoryID')"
+        >
+        </kendo-dropdownlist>
+      </ng-template>
+      <!-- <ng-template kendoGridCellTemplate let-dataItem>
+        {{ category(dataItem.CategoryID)?.CategoryName }}
+      </ng-template> -->
+
       </kendo-grid-column>
 
       <kendo-grid-column field="UnitsOnOrder" title="Appoitment Type" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
