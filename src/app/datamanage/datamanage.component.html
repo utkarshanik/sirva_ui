@@ -93,7 +93,6 @@
           </div>
 
           <div class="col-6 d-flex justify-content-end justify-content-space-evenly g-2 mb-3">
-
               <div class="  rounded-5 p-1 px-2 d-flex align-items-center justify-content-between w-25  bluebt2">
                 <button kendoButton  (click)="selectButton('non-intl')"  [ngClass]="['rounded-5', 'w-75', 'h-75', 'mx-2', selected === 'non-intl' ? 'active-btn' : 'inactive-btn']"  title="Browse" >Non-Intl.</button>
                 
@@ -102,36 +101,11 @@
               </div>
 
                 <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Clear Filters</button>
-                <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2"> Bulk Edit</button>
-            
-                <button kendoButton 
-  (click)="saveGridSettings(grid)" 
-  title="Save Preference" 
-  class="greenbt mx-2">
-  Save Preference
-</button>
-                
-                <button  kendoButton  fillMode="flat"  class="bbs" >
-                  <kendo-svgicon [icon]="menuIcon" ></kendo-svgicon>
-                </button>
-                <!-- <div class="mx-3">
-                  <kendo-dropdownlist
-  [style.width.px]="200"
-  [data]="savedPreferences"
-  textField="name"
-  valueField="id"
-  [valuePrimitive]="false"
-  [(ngModel)]="selectedPreference"
-  (valueChange)="loadSavedState($event)"
-  placeholder="Select Saved Preference">
-  <ng-template kendoDropDownListNoDataTemplate>
-    No preferences saved
-  </ng-template>
-</kendo-dropdownlist>
-                </div> -->
+                <button  kendoButton  title="Browse" class="greenbt mx-2"> Bulk Edit</button>
+                <button kendoButton (click)="saveGridSettings(grid)" title="Save Preference" class="greenbt mx-2"> Save Preference</button>
+                <button  kendoButton  fillMode="flat"  class="bbs" ><kendo-svgicon [icon]="menuIcon" ></kendo-svgicon></button>
           </div>
         </div>
-        
       </ng-template>
       
       <kendo-grid-checkbox-column [width]="45" [headerClass]="{ 'text-center': true }" [class]="{ 'text-center': true }" [resizable]="false"
@@ -186,11 +160,7 @@
         <ng-template kendoGridCellTemplate let-dataItem>
           {{ getCategoryName(dataItem.CategoryID) }}
         </ng-template>
-        <ng-template
-        kendoGridEditTemplate
-        let-dataItem="dataItem"
-        let-formGroup="formGroup"
-      >
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
         <kendo-dropdownlist
           [defaultItem]="{
             CategoryID: null,
@@ -200,14 +170,12 @@
           textField="CategoryName"
           valueField="CategoryID"
           [valuePrimitive]="true"
-          [formControl]="formGroup.get('CategoryID')"
-        >
+          [formControl]="formGroup.get('CategoryID')">
         </kendo-dropdownlist>
       </ng-template>
       <!-- <ng-template kendoGridCellTemplate let-dataItem>
         {{ category(dataItem.CategoryID)?.CategoryName }}
       </ng-template> -->
-
       </kendo-grid-column>
 
       <kendo-grid-column field="UnitsOnOrder" title="Appoitment Type" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
