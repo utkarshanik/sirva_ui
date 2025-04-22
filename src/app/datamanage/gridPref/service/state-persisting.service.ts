@@ -15,12 +15,60 @@ const getCircularReplacer = () => {
   };
 };
 
+export interface SavedPreference {
+  id: string;
+  name: string;
+  gridConfig: GridSettings;
+  timestamp: Date;
+}
+
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class StatePersistingService {
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  
+  private readonly PREFERENCES_KEY = 'gridPreferences';
+  public savePreference(name: string, gridConfig: GridSettings): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const preferences = this.getAllPreferences();
+      const newPreference: SavedPreference = {
+        id: crypto.randomUUID(),
+        name,
+        gridConfig,
+        timestamp: new Date()
+      };
+      
+      preferences.push(newPreference);
+      localStorage.setItem(this.PREFERENCES_KEY, JSON.stringify(preferences, getCircularReplacer()));
+    }
+  }
 
+  public getAllPreferences(): SavedPreference[] {
+    if (isPlatformBrowser(this.platformId)) {
+      const saved = localStorage.getItem(this.PREFERENCES_KEY);
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  }
+
+  public getPreferenceById(id: string): GridSettings | null {
+    const preferences = this.getAllPreferences();
+    const preference = preferences.find(p => p.id === id);
+    return preference ? preference.gridConfig : null;
+  }
+
+  public deletePreference(id: string): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const preferences = this.getAllPreferences().filter(p => p.id !== id);
+      localStorage.setItem(this.PREFERENCES_KEY, JSON.stringify(preferences, getCircularReplacer()));
+    }
+  }
+
+
+  // --------------
   public get<T>(token: string): T | null {
     if (isPlatformBrowser(this.platformId)) {
       const settings = localStorage.getItem(token);

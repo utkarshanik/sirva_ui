@@ -67,9 +67,23 @@
               </kendo-dropdownlist> 
             </div>
             <div class="mx-3">
-                <kendo-dropdownlist [style.width.px]="200" [data]="listItems2" value="Select Saved Preference">
-                </kendo-dropdownlist> 
-            </div>
+                 
+                <kendo-dropdownlist
+                [style.width.px]="200"
+                [data]="savedPreferences"
+                textField="name"
+                valueField="id"
+                [valuePrimitive]="false"
+                [(ngModel)]="selectedPreference"
+                (valueChange)="loadSavedState($event)"
+                [defaultItem]="{ id: null, name: 'Select Saved Preference' }"
+                >
+                <ng-template kendoDropDownListNoDataTemplate>
+                  No preferences saved
+                </ng-template>
+              </kendo-dropdownlist> 
+           
+              </div>
             <kendo-textbox #searchBox [style.width.px]="200" placeholder="Type Search Keyword" (valueChange)="onFilter($event)"></kendo-textbox>
       
             <kendo-grid-spacer></kendo-grid-spacer>
@@ -89,18 +103,32 @@
 
                 <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Clear Filters</button>
                 <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2"> Bulk Edit</button>
-                <button  kendoButton (click)="saveGridSettings(grid)" title="Browse" class="greenbt mx-2">Save Preference</button>
+            
+                <button kendoButton 
+  (click)="saveGridSettings(grid)" 
+  title="Save Preference" 
+  class="greenbt mx-2">
+  Save Preference
+</button>
                 
                 <button  kendoButton  fillMode="flat"  class="bbs" >
                   <kendo-svgicon [icon]="menuIcon" ></kendo-svgicon>
                 </button>
-                <button
-                  kendoButton
-                  *ngIf="savedStateExists"
-                  (click)="loadSavedState()"
-                  class="greenbt mx-2">
-                  Load saved state
-                </button>
+                <!-- <div class="mx-3">
+                  <kendo-dropdownlist
+  [style.width.px]="200"
+  [data]="savedPreferences"
+  textField="name"
+  valueField="id"
+  [valuePrimitive]="false"
+  [(ngModel)]="selectedPreference"
+  (valueChange)="loadSavedState($event)"
+  placeholder="Select Saved Preference">
+  <ng-template kendoDropDownListNoDataTemplate>
+    No preferences saved
+  </ng-template>
+</kendo-dropdownlist>
+                </div> -->
           </div>
         </div>
         
