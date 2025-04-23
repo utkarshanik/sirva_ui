@@ -497,8 +497,10 @@ public getCategoryName(categoryId: number): string {
             if (settings.state.filter) {
               this.grid.filter = settings.state.filter;
             }
-            this.grid.skip = settings.state.skip || 0;
-            this.grid.pageSize = settings.state.take || 5;
+            this.gridSettings.state.take = this.gridData.length; // Show all rows
+            this.gridSettings.state.skip = 0; // Start from first page
+            this.grid.pageSize = this.gridData.length;
+            this.grid.skip = 0;
           }
   
           // Apply column configurations
