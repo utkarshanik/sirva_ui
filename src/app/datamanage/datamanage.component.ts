@@ -600,6 +600,22 @@ public getCategoryName(categoryId: number): string {
     });
   };
 
+  // --------Delete Prefrences------------------->
+  
+  deletePreference(item: any, event: Event): void {
+    event.stopPropagation(); // Prevent dropdown from selecting the item
+    const index = this.savedPreferences.indexOf(item);
+    if (index > -1) {
+      this.savedPreferences.splice(index, 1);
+      // Optional: clear selectedPreference if it's the deleted one
+      if (this.selectedPreference?.id === item.id) {
+        this.selectedPreference = null;
+      }
+    }
+    this.persistingService.deletePreference(item.id);
+  }
+  
+
 }
 
 const createFormGroup = (dataItem: Partial<Product>) =>
