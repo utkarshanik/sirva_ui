@@ -76,3 +76,14 @@
 .k-button.greenbt .k-icon {
   margin-right: 4px;
 }
+
+/* // toggle Button Responsive */
+.responsive-width {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .responsive-width {
+    width: 25% !important;
+  }
+}

@@ -1,15 +1,15 @@
-<div class="d-flex justify-content-arround align-items-center mb-3">
-  <div class="col-6">
-    <h2 class="manage"> Lead Management |  <span class="lead">Leads</span> </h2>
+<div class="d-flex flex-column flex-md-row justify-content-arround align-items-center mb-3">
+  <div class="col-12 col-md-6">
+    <h2 class="manage "> Lead Management |  <span class="lead">Leads</span> </h2>
   </div>
 
-  <div class=" d-flex justify-content-end align-items-center col-6">
-    <div>
+  <div class="col-12 col-md-6 d-flex justify-content-end align-items-center ">
+    <div class="">
         <input type="checkbox" id="checkbox2" kendoCheckBox />
         <label class="k-checkbox-label" for="checkbox2">Board View</label>
     </div>
 
-    <div class="m-2">
+    <div class="m-1">
       <button kendoButton type="button" (click)="exportExcel()"  class="greenbt" >
         <img src="assets/export.png" alt="">
         Export To Excel</button>
@@ -59,14 +59,14 @@
   (dataStateChange)="dataStateChange($event)">
 
       <ng-template kendoGridToolbarTemplate class="p-0">
-        <div class="col-12 d-flex justify-content-between align-items-center">
-          <div class="col- d-flex justify-content-space-between align-items-center mb-3">
+        <div class="row col-12 d-flex flex-column flex-md-row justify-content-between align-items-center">
+          <div class="col-12 col-xl-6  d-flex flex-column flex-md-row justify-content-space-between align-items-center  mb-3">
       
             <div>
               <kendo-dropdownlist [style.width.px]="200" [data]="listItems" value="All Leads">
               </kendo-dropdownlist> 
             </div>
-            <div class="mx-3">
+            <div class="mx-md-3 m-2 ">
                  
                 <kendo-dropdownlist
                 [style.width.px]="200"
@@ -84,16 +84,19 @@
               </kendo-dropdownlist> 
            
               </div>
+              <div class="d-flex">
+
             <kendo-textbox #searchBox [style.width.px]="200" placeholder="Type Search Keyword" (valueChange)="onFilter($event)"></kendo-textbox>
-      
-            <kendo-grid-spacer></kendo-grid-spacer>
+            <!-- <kendo-grid-spacer></kendo-grid-spacer> -->
             <div class="greenbt p-1 rounded-3 ms-2" (click)="onFilter(searchBox.value)">
               <img src="assets/icons8-search-25.png" alt="Search Icon">
+              </div>
+
             </div>
           </div>
 
-          <div class="col-6 d-flex justify-content-end justify-content-space-evenly g-2 mb-3">
-              <div class="  rounded-5 p-1 px-2 d-flex align-items-center justify-content-between w-25  bluebt2">
+          <div class="col-12 col-xl-6  d-flex flex-column flex-md-row justify-content-end justify-content-space-evenly mb-3">
+              <div class="responsive-width  mb-2 mb-md-0 rounded-5 p-1 px-2 d-flex align-items-center justify-content-between  bluebt2">
                 <button kendoButton  (click)="selectButton('non-intl')"  [ngClass]="['rounded-5', 'w-75', 'h-75', 'mx-2', selected === 'non-intl' ? 'active-btn' : 'inactive-btn']"  title="Browse" >Non-Intl.</button>
                 
                 <button kendoButton (click)="selectButton('intl')"  [ngClass]="['rounded-5', 'w-75', 'h-75', 'mx-2', selected === 'intl' ? 'active-btn' : 'inactive-btn']" 
@@ -101,7 +104,7 @@
               </div>
 
                 <button  kendoButton (click)="onButtonClick()" title="Browse" class="greenbt mx-2">Clear Filters</button>
-                <button  kendoButton  title="Browse" class="greenbt mx-2"> Bulk Edit</button>
+                <button  kendoButton  title="Browse" class="greenbt mx-2 my-2 my-md-0"> Bulk Edit</button>
                 <button kendoButton (click)="saveGridSettings(grid)" title="Save Preference" class="greenbt mx-2"> Save Preference</button>
                 <button  kendoButton  fillMode="flat"  class="bbs" ><kendo-svgicon [icon]="menuIcon" ></kendo-svgicon></button>
           </div>
