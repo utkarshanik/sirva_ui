@@ -132,17 +132,25 @@
         [columnMenu]="false" [showSelectAll]="true">
       </kendo-grid-checkbox-column>
       
-      <kendo-grid-column field="full_name" title="Actions" [width]="130" [sticky]="true" [columnMenu]="true" [sortable]="true" [filterable]="true">
+      <kendo-grid-column field="full_name" title="Actions" [width]="150" [sticky]="true" [columnMenu]="true" [sortable]="true" [filterable]="true">
         <ng-template kendoGridCellTemplate let-dataItem>
-          <kendo-dropdowntree
+           <kendo-dropdowntree
             kendoDropDownTreeExpandable
             [kendoDropDownTreeHierarchyBinding]="areaData"
             textField="text"
             valueField="id"
             childrenField="areas"
             placeholder="Actions"
+            [popupSettings]="{ width: 300 }"
             (click)="$event.stopPropagation()">
-          </kendo-dropdowntree>
+            <!-- Value template for the button display -->
+            <div class="d-flex align-self-center ">
+            <ng-template kendoDropDownTreeValueTemplate>
+                <img src="assets/icons8-setting-24.png" alt="" class="me-2" >
+                <span>Actions</span>
+              </ng-template>
+            </div>
+          </kendo-dropdowntree>            
         </ng-template>
       </kendo-grid-column> 
 

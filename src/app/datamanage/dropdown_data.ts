@@ -71,5 +71,35 @@ export const areaData: AreaData[] = [
       { text: "Paris", id: 9 },
     ],
   },
+  {
+    text: "Possible Matches",
+    id: 6,
+    areas: [
+      { text: "Amsterdam", id: 7 },
+      { text: "Barcelona", id: 10 },
+      { text: "London", id: 8 },
+      { text: "Paris", id: 9 },
+    ],
+  },
+  {
+    text: "Possible Matches",
+    id: 6,
+    areas: [
+      { text: "Amsterdam", id: 7 },
+      { text: "Barcelona", id: 10 },
+      { text: "London", id: 8 },
+      { text: "Paris", id: 9 },
+    ],
+  },
+  {
+    text: "Possible Matches",
+    id: 6,
+    areas: [
+      { text: "Amsterdam", id: 7 },
+      { text: "Barcelona", id: 10 },
+      { text: "London", id: 8 },
+      { text: "Paris", id: 9 },
+    ],
+  },
 ];
 
