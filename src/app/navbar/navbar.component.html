@@ -1,7 +1,7 @@
-<div class="nav-right m-2">
-  <button class="dark-mode btn btn-outline-secondary" (click)="toggleDarkMode()">
-    <i class="bi bi-moon-fill fw-normal" *ngIf="!isDarkMode"><span class="m-1">Dark Mode </span></i>
-    <i class="bi bi-sun-fill fw-normal" *ngIf="isDarkMode"><span class="m-1">Light Mode</span></i>
+<div class="nav-right my-2">
+  <button class="dark-mode btn btn-outline-secondary " (click)="toggleDarkMode()">
+    <i class="bi bi-moon-fill fw-normal" *ngIf="!isDarkMode"><span class="m-1  d-none d-md-inline">Dark Mode </span></i>
+    <i class="bi bi-sun-fill fw-normal" *ngIf="isDarkMode"><span class="m-1 d-none d-md-inline">Light Mode</span></i>
   </button>
 
  <button class="dark-mode btn btn-outline-secondary">
@@ -30,8 +30,8 @@
 </div>
 
 <div class="navbar p-2">  
-  <div class="container-fluid   d-flex justify-content-between align-items-center mb-2">
-    <kendo-tabstrip class="my-tabstrip">
+  <div class="container-fluid  d-flex justify-content-between align-items-center mb-2">
+    <kendo-tabstrip class="my-tabstrip ">
 
       <kendo-tabstrip-tab>
         <ng-template kendoTabTitle>

@@ -3,7 +3,6 @@
   font-style: normal !important;
 }
 
-
 nav {
   background-color: white;
   padding: 10px 20px;
@@ -11,6 +10,7 @@ nav {
   align-items: center;
   justify-content: space-between;
 }
+
 .nav-left {
   display: flex;
   justify-content: start;
@@ -30,7 +30,6 @@ nav {
 
 /* Perosn */
 .user-info {
-  /* padding: 8px; */
   background-color: #002c77;
   border-radius: 4px;
   padding: 4px;
@@ -71,19 +70,11 @@ nav {
   text-decoration: none;
 }
 
-
 kendo-tabstrip p {
     margin: 0;
     padding: 8px;
   }
   
-/* 
-  kendo-tabstrip .k-tabstrip-items .k-item:nth-child(1) {
-    background-color: rgb(40, 120, 146); /* Change to your desired color 
-  } */
-
-  /* Remove border for the whole box and apply it to individual tabs */
-
 /* Make tabs rounded from the top only */
 ::ng-deep .my-tabstrip .k-tabstrip-items .k-item {
   color: #fff;
@@ -102,9 +93,6 @@ kendo-tabstrip p {
   /* border: 3px solid #88bb44; Border for the active tab */
   border-top-left-radius:5px; /* Rounded corners at the top */
   border-top-right-radius: 5px; /* Rounded corners at the top */
-  /* border-bottom-left-radius: 1px; No rounding at the bottom */
-  /* border-bottom-right-radius: 5px; No rounding at the bottom */
-  /* width: 100vw; */
 }
 
 /* Add a border below all tabs */
@@ -127,6 +115,5 @@ kendo-tabstrip p {
 .tab-content {
   padding: 15px;
   font-size: 16px;
-  /* background-color: #fafafa; */
-  /* border-top: 1px solid #ddd; */
+
 }
