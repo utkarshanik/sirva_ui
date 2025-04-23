@@ -10,6 +10,15 @@ export interface Product {
   UnitsOnOrder: number;
   ReorderLevel: string;
   Discontinued: boolean;
+
+  Sales:string;
+  Coordinator:string;
+  Source:string;
+  Mobile:string;
+  AssignedDate:string;
+  EffectiveDate:string;
+  ValidDate:string;
+  CheckingDate:string;
   [key: string]: string | number | boolean | undefined;
 }
 

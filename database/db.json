@@ -11,6 +11,14 @@
       "QuantityPerUnit": " oz jars",
       "UnitsOnOrder": 0,
       "ReorderLevel": "GDDPL",
+      "Sales": "dfgd",
+      "Coordinator": "dfgdfgtretretre",
+      "Source": "rtrete",
+      "Mobile": "mnmb",
+      "AssignedDate": "iuou",
+      "EffectiveDate": "asdasd",
+      "ValidDate": "puopo",
+      "CheckingDate": "iouioi",
       "Discontinued": null
     },
     {
@@ -24,6 +32,14 @@
       "QuantityPerUnit": "jhjoz jars",
       "UnitsOnOrder": "ytryr",
       "ReorderLevel": "GDDPL",
+      "Sales": "tyrtyr",
+      "Coordinator": "tyrtyr",
+      "Source": "tyrtyr",
+      "Mobile": "tyrtyr",
+      "AssignedDate": "tyrtyr",
+      "EffectiveDate": "tyrtyr",
+      "ValidDate": "tyrtyr",
+      "CheckingDate": "tyrtyr",
       "Discontinued": null
     },
     {
@@ -37,6 +53,14 @@
       "QuantityPerUnit": "48 - 6 oz jars",
       "UnitsOnOrder": 0,
       "ReorderLevel": "GDDPL",
+      "Sales": "tyrtyr",
+      "Coordinator": "tyrtyr",
+      "Source": "tyrtyr",
+      "Mobile": "tyrtyr",
+      "AssignedDate": "tyrtyr",
+      "EffectiveDate": "tyrtyr",
+      "ValidDate": "tyrtyr",
+      "CheckingDate": "tyrtyr",
       "Discontinued": null
     },
     {
@@ -50,6 +74,14 @@
       "QuantityPerUnit": "tyr",
       "UnitsOnOrder": "hg",
       "ReorderLevel": "ghf",
+      "Sales": "tyrtyr",
+      "Coordinator": "tyrtyr",
+      "Source": "tyrtyr",
+      "Mobile": "tyrtyr",
+      "AssignedDate": "tyrtyr",
+      "EffectiveDate": "tyrtyr",
+      "ValidDate": "tyrtyr",
+      "CheckingDate": "tyrtyr",
       "Discontinued": null
     },
     {
@@ -63,6 +95,14 @@
       "QuantityPerUnit": "0dgfgd",
       "UnitsOnOrder": 0,
       "ReorderLevel": "0",
+      "Sales": "tyrtyr",
+      "Coordinator": "tyrtyr",
+      "Source": "tyrtyr",
+      "Mobile": "tyrtyr",
+      "AssignedDate": "tyrtyr",
+      "EffectiveDate": "tyrtyr",
+      "ValidDate": "tyrtyr",
+      "CheckingDate": "tyrtyr",
       "Discontinued": null
     }
   ]

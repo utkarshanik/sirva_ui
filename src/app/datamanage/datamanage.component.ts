@@ -77,6 +77,7 @@ private loadProducts(): void {
   });
 }
 
+// Load saved preferences from the service
 private loadPreferences(): void {
   this.savedPreferences = this.persistingService.getAllPreferences();
   this.savedStateExists = this.savedPreferences.length > 0;
@@ -96,6 +97,15 @@ private loadPreferences(): void {
       UnitsOnOrder: 0,
       ReorderLevel: "0",
       ProductID: 0,
+      Discontinued: false,
+      Sales: "0",
+      Source: "0",
+      Coordinator: "0",
+      Mobile: "0",
+      AssignedDate: "0",
+      EffectiveDate: "0",
+      ValidDate: "0",
+      CheckingDate: "0",
     });
 
     sender.addRow(this.formGroup);
@@ -606,8 +616,17 @@ const createFormGroup = (dataItem: Partial<Product>) =>
     SupplierID: new FormControl(dataItem.SupplierID),
     QuantityPerUnit: new FormControl(dataItem.QuantityPerUnit),
     UnitsOnOrder: new FormControl(dataItem.UnitsOnOrder),
-    ReorderLevel: new FormControl(dataItem.ReorderLevel),
+    ReorderLevel: new FormControl(dataItem.ReorderLevel),    
     Discontinued: new FormControl(dataItem.Discontinued),
+    Sales: new FormControl(dataItem.Sales),
+    Source: new FormControl(dataItem.Source),
+    Coordinator: new FormControl(dataItem.Coordinator),
+    Mobile: new FormControl(dataItem.Mobile),
+    AssignedDate: new FormControl(dataItem.AssignedDate),
+    EffectiveDate: new FormControl(dataItem.EffectiveDate),
+    ValidDate: new FormControl(dataItem.ValidDate),
+    CheckingDate: new FormControl(dataItem.CheckingDate),
+
   });
 
 
