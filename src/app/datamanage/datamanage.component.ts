@@ -18,6 +18,7 @@ import{categories} from './category';
 import { GridSettings } from './gridPref/grid-settings.interface';
 import { SavedPreference, StatePersistingService } from './gridPref/service/state-persisting.service';
 import{ColumnSettings} from './gridPref/column-settings.interface';
+import { KENDO_DATEPICKER } from '@progress/kendo-angular-dateinputs';
 
 @Component({
   selector: 'app-datamanage',
@@ -26,7 +27,7 @@ import{ColumnSettings} from './gridPref/column-settings.interface';
     KENDO_INPUTS,
     KENDO_GRID_PDF_EXPORT,
     KENDO_GRID_EXCEL_EXPORT,KENDO_BUTTONS,KENDO_DROPDOWNLIST,
-    IconsModule,DropDownTreeComponent,
+    IconsModule,DropDownTreeComponent,KENDO_DATEPICKER,
     KENDO_DROPDOWNTREE,KENDO_CHECKBOX,ReactiveFormsModule,FormsModule],
     providers: [DataservieService],
   templateUrl: './datamanage.component.html',

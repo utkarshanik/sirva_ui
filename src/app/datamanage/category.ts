@@ -1,22 +1,22 @@
 export const categories = [
   {
     CategoryID: 1,
-    CategoryName: "23423",
+    CategoryName: "New",
   },
   {
     CategoryID: 2,
-    CategoryName: "56566",
+    CategoryName: "Contacted",
   },
   {
     CategoryID: 6,
-    CategoryName: "8978",
+    CategoryName: "Qualified",
   },
   {
     CategoryID: 7,
-    CategoryName: "565456",
+    CategoryName: "Converted",
   },
   {
     CategoryID: 8,
-    CategoryName: "43545",
+    CategoryName: "Lost",
   },
 ];
