@@ -113,21 +113,23 @@ private loadPreferences(): void {
   }
 
   public saveHandler({ sender, rowIndex, formGroup, isNew, dataItem }: SaveEvent): void {
-    const product = {
-      ...formGroup.value,
-      id: dataItem.id  // Ensure we include the original item's ID
-    };
+    const formValue = formGroup.value;
   
-    console.log('Saving product:', product);
+    // Format date before saving
+    if (formValue.AssignedDate instanceof Date) {
+      formValue.AssignedDate = formValue.AssignedDate.toISOString();
+    }
+    formValue.EffectiveDate = formValue.EffectiveDate.toISOString();
+    formValue.ValidDate = formValue.ValidDate.toISOString();
+    const product = {
+      ...formValue,
+      id: dataItem.id
+    };
   
     if (isNew) {
       this.service.addProduct(product).subscribe(() => this.loadProducts());
       this.closeEditor(sender, rowIndex);
     } else {
-      if (!product.id) {
-        console.error('Product ID is missing:', product);
-        return;
-      }
       this.service.updateProduct(product).subscribe(
         () => {
           this.loadProducts();
@@ -641,9 +643,11 @@ const createFormGroup = (dataItem: Partial<Product>) =>
     Source: new FormControl(dataItem.Source),
     Coordinator: new FormControl(dataItem.Coordinator),
     Mobile: new FormControl(dataItem.Mobile),
-    AssignedDate: new FormControl(dataItem.AssignedDate),
-    EffectiveDate: new FormControl(dataItem.EffectiveDate),
-    ValidDate: new FormControl(dataItem.ValidDate),
+    AssignedDate: new FormControl(
+      dataItem.AssignedDate ? new Date(dataItem.AssignedDate) : null
+    ),
+    EffectiveDate: new FormControl(dataItem.EffectiveDate ? new Date(dataItem.EffectiveDate) : null),
+    ValidDate: new FormControl(dataItem.ValidDate ? new Date(dataItem.ValidDate) : null),
     CheckingDate: new FormControl(dataItem.CheckingDate),
 
   });

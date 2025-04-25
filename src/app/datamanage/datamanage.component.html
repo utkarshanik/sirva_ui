@@ -201,10 +201,25 @@
             [formControl]="formGroup.get('CategoryID')">
           </kendo-dropdownlist>
         </ng-template>
-     
       </kendo-grid-column> 
 
       <kendo-grid-column field="UnitsOnOrder" title="Appoitment Type" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
+      </kendo-grid-column>
+
+      <kendo-grid-column field="AssignedDate" title="Assigned Date" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
+        <!-- Display template -->
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ dataItem.AssignedDate | date:'MM/dd/yyyy' }}
+        </ng-template>
+        <!-- Edit template -->
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
+          <kendo-datepicker
+            [formControl]="formGroup.get('AssignedDate')"
+            placeholder="Choose a date..."
+            format="MM/dd/yyyy"
+          >
+          </kendo-datepicker>
+        </ng-template>
       </kendo-grid-column>
 
       <kendo-grid-column field="ReorderLevel" title="Booking Agency" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
@@ -219,11 +234,32 @@
       </kendo-grid-column> 
       <kendo-grid-column field="Mobile" title="Mobile Sync Status" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
       </kendo-grid-column> 
-      <kendo-grid-column field="AssignedDate" title="Assigned Date" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
-      </kendo-grid-column> 
+      
       <kendo-grid-column field="EffectiveDate" title="Effective Date" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ dataItem.EffectiveDate | date:'MM/dd/yyyy' }}
+        </ng-template>
+        <!-- Edit template -->
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
+          <kendo-datepicker
+            [formControl]="formGroup.get('EffectiveDate')"
+            placeholder="Choose a date..."
+            format="MM/dd/yyyy">
+          </kendo-datepicker>
+        </ng-template>
       </kendo-grid-column> 
       <kendo-grid-column field="ValidDate" title="Valid Through" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ dataItem.ValidDate | date:'MM/dd/yyyy' }}
+        </ng-template>
+        <!-- Edit template -->
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
+          <kendo-datepicker
+            [formControl]="formGroup.get('ValidDate')"
+            placeholder="Choose a date..."
+            format="MM/dd/yyyy">
+          </kendo-datepicker>
+        </ng-template>
       </kendo-grid-column> 
       <kendo-grid-column field="CheckingDate" title="Checking" [width]="150" [columnMenu]="true" [sortable]="true" [filterable]="true">
       </kendo-grid-column> 
