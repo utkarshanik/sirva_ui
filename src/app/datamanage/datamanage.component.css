@@ -82,6 +82,7 @@
   width: 100%;
 }
 
+
 @media (min-width: 768px) {
   .responsive-width {
     width: 25% !important;

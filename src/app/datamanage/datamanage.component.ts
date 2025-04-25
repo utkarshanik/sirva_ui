@@ -19,6 +19,7 @@ import { GridSettings } from './gridPref/grid-settings.interface';
 import { SavedPreference, StatePersistingService } from './gridPref/service/state-persisting.service';
 import{ColumnSettings} from './gridPref/column-settings.interface';
 import { KENDO_DATEPICKER } from '@progress/kendo-angular-dateinputs';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-datamanage',
@@ -27,7 +28,7 @@ import { KENDO_DATEPICKER } from '@progress/kendo-angular-dateinputs';
     KENDO_INPUTS,
     KENDO_GRID_PDF_EXPORT,
     KENDO_GRID_EXCEL_EXPORT,KENDO_BUTTONS,KENDO_DROPDOWNLIST,
-    IconsModule,DropDownTreeComponent,KENDO_DATEPICKER,
+    IconsModule,DropDownTreeComponent,KENDO_DATEPICKER,NgbDropdownModule,
     KENDO_DROPDOWNTREE,KENDO_CHECKBOX,ReactiveFormsModule,FormsModule],
     providers: [DataservieService],
   templateUrl: './datamanage.component.html',
@@ -211,7 +212,7 @@ public rowClickHandler(event: any): void {
   const rowIndex = rowElements.indexOf(targetRow);
   
   const data = this.grid.data as any[] | null;
-  const dataItem = data ? data[rowIndex] : null;
+  const dataItem = data ? data [rowIndex] : null;
   
   if (dataItem) {
     this.editHandler({
@@ -619,7 +620,6 @@ public getCategoryName(categoryId: number): string {
     }
     this.persistingService.deletePreference(item.id);
   }
-  
 
 }
 

@@ -75,14 +75,10 @@
               [valuePrimitive]="false"
               [(ngModel)]="selectedPreference"
               (valueChange)="loadSavedState($event)"
-              [defaultItem]="{ id: null, name: 'Select Saved Preference' }"
-            >
-              <!-- No data message -->
+              [defaultItem]="{ id: null, name: 'Select Saved Preference' }">
               <ng-template kendoDropDownListNoDataTemplate>
                 No preferences saved
               </ng-template>
-            
-              <!-- Custom item template with delete icon aligned right -->
               <ng-template kendoDropDownListItemTemplate let-dataItem>
                 <div style="display: flex; align-items: center; width: 100%;">
                   <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
@@ -92,17 +88,13 @@
                     type="button"
                     (click)="deletePreference(dataItem, $event)"
                     style="margin-left: auto; border: none; background: transparent; cursor: pointer;"
-                    title="Delete"
-                  >
+                    title="Delete">
                   <img src="assets/icons8-delete-24.png" alt="" srcset="">
                   </button>
                 </div>
               </ng-template>
-              
-            </kendo-dropdownlist>
-            
-           
-              </div>
+              </kendo-dropdownlist>
+            </div>
               <div class="d-flex">
                 <kendo-textbox #searchBox [style.width.px]="160" placeholder="Type Search Keyword" (valueChange)="onFilter($event)"></kendo-textbox>
                 <!-- <kendo-grid-spacer></kendo-grid-spacer> -->
@@ -269,5 +261,4 @@
       <kendo-grid-excel fileName="data.xlsx"></kendo-grid-excel>
 
     </kendo-grid>
-
 </div>
