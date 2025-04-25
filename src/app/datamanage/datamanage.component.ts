@@ -137,6 +137,7 @@ private loadPreferences(): void {
           sender.closeRow(rowIndex);
           this.formGroup = undefined;
           this.editedRowIndex = undefined;
+          this.closeEditor(sender, rowIndex);
         },
         error => {
           console.error('Error updating product:', error);
@@ -198,52 +199,48 @@ handleDocumentClick(event: MouseEvent) {
     this.saveCurrentEdit();
   }
 }
-public rowClickHandler(event: any): void {
-  // Save previous edit if exists
+
+public cellClickHandler({
+  isEdited,
+  dataItem,
+  rowIndex,
+}: CellClickEvent): void {
+  if (isEdited || (this.formGroup && !this.formGroup.valid)) {
+    return;
+  }
+
+  // if (this.isNew) {
+  //   rowIndex += 1;
+  // }
+
   this.saveCurrentEdit();
 
-  const targetRow = event.target.closest('tr');
-  if (!targetRow) return;
-  
-  // Ignore if clicking command buttons
-  if (event.target.closest('.k-grid-commands')) return;
-  
-  const rowElements = Array.from(this.grid.wrapper.nativeElement.querySelectorAll('tbody tr'));
-  const rowIndex = rowElements.indexOf(targetRow);
-  
-  const data = this.grid.data as any[] | null;
-  const dataItem = data ? data [rowIndex] : null;
-  
-  if (dataItem) {
-    this.editHandler({
+  this.formGroup = createFormGroup(dataItem);
+  this.editedRowIndex = rowIndex;
+
+  this.grid.editRow(rowIndex, this.formGroup);
+}
+
+public onCellClose(args: any): void {
+  if (this.formGroup?.dirty && this.editedRowIndex !== undefined) {
+    const data = this.grid.data as Product[] | null;
+    const dataItem = data && this.editedRowIndex !== undefined ? data[this.editedRowIndex] : null;
+    this.saveHandler({
       sender: this.grid,
-      rowIndex,
-      dataItem,
-      isNew: false
+      rowIndex: this.editedRowIndex,
+      formGroup: this.formGroup,
+      isNew: false,
+      dataItem
     });
   }
 }
 
-  public onGridBlur(event: any): void {
-    if (this.currentlyEditedRow !== undefined && this.formGroup) {
-      const data = this.grid.data as Product[] | null;
-      const dataItem = data && this.currentlyEditedRow !== undefined ? data[this.currentlyEditedRow] : null;
-      // Save the changes
-      this.saveHandler({
-        sender: this.grid,
-        rowIndex: this.currentlyEditedRow,
-        formGroup: this.formGroup,
-        isNew: false,
-        dataItem
-      });
-      this.currentlyEditedRow = undefined;
-    }
-  }
-
-  public onCellClose(args: any): void {
-    if (this.formGroup?.dirty && this.editedRowIndex !== undefined) {
-      const data = this.grid.data as Product[] | null;
-      const dataItem = data && this.editedRowIndex !== undefined ? data[this.editedRowIndex] : null;
+private saveCurrentEdit(): void {
+  if (this.formGroup?.dirty && this.editedRowIndex !== undefined) {
+    const data = this.grid.data as Product[] | null;
+    const dataItem = data?.[this.editedRowIndex];
+    
+    if (dataItem) {
       this.saveHandler({
         sender: this.grid,
         rowIndex: this.editedRowIndex,
@@ -253,38 +250,7 @@ public rowClickHandler(event: any): void {
       });
     }
   }
-
-  public onCellBlur(args: any): void {
-    if (this.formGroup?.dirty) {
-      const dataItem = args.dataItem;
-      const formGroup = args.formGroup || this.formGroup;
-      
-      this.saveHandler({
-        sender: this.grid,
-        rowIndex: this.editedRowIndex || args.rowIndex,
-        formGroup: formGroup,
-        isNew: false,
-        dataItem
-      });
-    }
-  }
-
-  private saveCurrentEdit(): void {
-    if (this.formGroup?.dirty && this.editedRowIndex !== undefined) {
-      const data = this.grid.data as Product[] | null;
-      const dataItem = data?.[this.editedRowIndex];
-      
-      if (dataItem) {
-        this.saveHandler({
-          sender: this.grid,
-          rowIndex: this.editedRowIndex,
-          formGroup: this.formGroup,
-          isNew: false,
-          dataItem
-        });
-      }
-    }
-  }
+}
 
   // Add column menu and settings Drop down lead id
 public category(id: number): Category {
